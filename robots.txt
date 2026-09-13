@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sareeprepleating.vercel.app/sitemap.xml
