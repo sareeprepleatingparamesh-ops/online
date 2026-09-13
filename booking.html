@@ -1,0 +1,2170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+<title>Book Your Saree | Paramesh Saree Prepleating</title>
+
+<style>
+:root{
+  --maroon:#5b1024;
+  --deep:#3f0a18;
+  --gold:#c79a45;
+  --cream:#fffaf3;
+  --bg:#efede9;
+  --ink:#2d2224;
+  --muted:#76686b;
+  --line:#eadfd1;
+  --white:#fff;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Arial,sans-serif;
+}
+
+.topbar{
+  height:62px;
+  background:linear-gradient(135deg,#3f0a18,#68152d);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:7px 14px;
+  position:sticky;
+  top:0;
+  z-index:20;
+  box-shadow:0 4px 18px #3b07172a;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.logo{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  object-fit:cover;
+  border:1px solid #e9c875;
+}
+
+.brand b{
+  display:block;
+  font:700 18px Georgia,serif;
+}
+
+.brand span{
+  font-size:8px;
+  letter-spacing:2px;
+  color:#f6d98d;
+}
+
+.back{
+  border:1px solid #ffffff38;
+  background:#ffffff12;
+  color:#fff;
+  border-radius:10px;
+  padding:9px 12px;
+  font-size:11px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.wrap{
+  max-width:900px;
+  margin:auto;
+  padding:15px 11px 90px;
+}
+
+.title{
+  text-align:center;
+  padding:5px 0 13px;
+}
+
+.title h1{
+  margin:0;
+  font:700 28px Georgia,serif;
+  color:var(--deep);
+}
+
+.title p{
+  margin:5px 0 0;
+  font-size:11px;
+  color:var(--muted);
+}
+
+.panel{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:14px;
+  box-shadow:0 7px 22px #3b07170d;
+  margin-bottom:12px;
+}
+
+.panel h2{
+  margin:0 0 10px;
+  font:700 17px Georgia,serif;
+  color:var(--deep);
+}
+
+.cart-row{
+  display:flex;
+  gap:10px;
+  padding:9px 0;
+  border-bottom:1px solid #f0e7dd;
+}
+
+.cart-row:last-child{
+  border-bottom:0;
+}
+
+.cart-row img{
+  width:62px;
+  height:76px;
+  border-radius:10px;
+  object-fit:cover;
+  background:#eee;
+}
+
+.ci{
+  flex:1;
+  min-width:0;
+}
+
+.ci b{
+  font-size:12px;
+}
+
+.meta{
+  font-size:10px;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+.qty{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-top:8px;
+}
+
+.qty button{
+  width:27px;
+  height:27px;
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:8px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.qty span{
+  font-size:11px;
+  font-weight:800;
+}
+
+.line-total{
+  font-weight:900;
+  color:var(--maroon);
+  font-size:12px;
+  white-space:nowrap;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.field-wrap{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.field-wrap.full{
+  grid-column:1/-1;
+}
+
+.label{
+  font-size:10px;
+  font-weight:800;
+  color:#5b4a4e;
+}
+
+.field,
+.textarea{
+  width:100%;
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:11px;
+  padding:11px 12px;
+  outline:none;
+  font-size:12px;
+  color:var(--ink);
+}
+
+.field:focus,
+.textarea:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px #c79a4518;
+}
+
+.textarea{
+  min-height:78px;
+  resize:vertical;
+}
+
+/* LOCATION */
+
+.location-box{
+  display:flex;
+  gap:7px;
+}
+
+.location-box .field{
+  flex:1;
+}
+
+.loc-btn{
+  border:0;
+  border-radius:11px;
+  background:linear-gradient(135deg,var(--maroon),#7a1b36);
+  color:#fff;
+  font-weight:800;
+  font-size:10px;
+  padding:0 12px;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+.loc-btn:disabled{
+  opacity:.6;
+}
+
+.location-status{
+  font-size:9px;
+  color:var(--muted);
+  line-height:1.4;
+}
+
+.location-status.ok{
+  color:#39703e;
+}
+
+/* DATE */
+
+.date-box{
+  position:relative;
+}
+
+.date-box .field{
+  padding-right:42px;
+}
+
+.calendar-icon{
+  position:absolute;
+  right:13px;
+  top:50%;
+  transform:translateY(-50%);
+  pointer-events:none;
+  color:var(--gold);
+}
+
+/* SUMMARY */
+
+.summary{
+  background:linear-gradient(135deg,#fff9ee,#fff);
+  border:1px solid #ead7b9;
+  border-radius:13px;
+  padding:11px;
+  margin-top:10px;
+}
+
+.sum-line{
+  display:flex;
+  justify-content:space-between;
+  font-size:11px;
+  padding:3px 0;
+}
+
+.sum-line.total{
+  font-size:15px;
+  font-weight:900;
+  color:var(--maroon);
+  border-top:1px solid #eadfd1;
+  margin-top:5px;
+  padding-top:8px;
+}
+
+.submit{
+  width:100%;
+  border:0;
+  background:linear-gradient(135deg,var(--maroon),#7a1b36);
+  color:#fff;
+  border-radius:13px;
+  padding:13px;
+  font-weight:900;
+  font-size:13px;
+  letter-spacing:.4px;
+  cursor:pointer;
+  box-shadow:0 7px 15px #5b10242a;
+}
+
+.submit:active{
+  transform:scale(.985);
+}
+
+.submit:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+.small-note{
+  font-size:9px;
+  color:var(--muted);
+  line-height:1.55;
+  margin-top:8px;
+}
+
+/* CONFIRM MODAL */
+
+.modal-bg{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#1c0710a8;
+  z-index:50;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+}
+
+.modal{
+  width:min(520px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:#fff;
+  border-radius:20px;
+  border:1px solid #eadfd1;
+  box-shadow:0 20px 60px #21051155;
+}
+
+.modal-head{
+  padding:15px;
+  background:linear-gradient(135deg,#3f0a18,#68152d);
+  color:#fff;
+}
+
+.modal-head h3{
+  margin:0;
+  font:700 18px Georgia,serif;
+}
+
+.modal-body{
+  padding:15px;
+}
+
+.confirm-box{
+  background:#fffaf1;
+  border:1px solid #e8d2a9;
+  border-radius:13px;
+  padding:12px;
+  margin-bottom:11px;
+}
+
+.confirm-title{
+  font-weight:900;
+  color:var(--maroon);
+  font-size:12px;
+  margin-bottom:6px;
+}
+
+.confirm-list{
+  font-size:10px;
+  line-height:1.7;
+  color:#55484a;
+}
+
+.courier{
+  background:#f9f1e3;
+  border-left:4px solid var(--gold);
+  padding:11px;
+  border-radius:9px;
+  font-size:10px;
+  line-height:1.55;
+  color:#4e4143;
+  margin-bottom:12px;
+}
+
+.courier strong{
+  color:var(--maroon);
+}
+
+.modal-actions{
+  display:grid;
+  grid-template-columns:1fr 1.4fr;
+  gap:8px;
+}
+
+.cancel-btn{
+  border:1px solid var(--line);
+  background:#fff;
+  color:#5d4d50;
+  border-radius:11px;
+  padding:12px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.ok-btn{
+  border:0;
+  background:linear-gradient(135deg,var(--maroon),#7a1b36);
+  color:#fff;
+  border-radius:11px;
+  padding:12px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.ok-btn:disabled{
+  opacity:.6;
+}
+
+/* SUCCESS */
+
+.success{
+  display:none;
+  text-align:center;
+  padding:35px 18px;
+}
+
+.success-icon{
+  width:65px;
+  height:65px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  margin:0 auto 12px;
+  background:#edf7ee;
+  color:#2d7337;
+  font-size:30px;
+}
+
+.success h2{
+  margin:0;
+  color:var(--deep);
+  font:700 23px Georgia,serif;
+}
+
+.success p{
+  font-size:11px;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.booking-id{
+  display:inline-block;
+  background:#fff8e9;
+  border:1px dashed var(--gold);
+  padding:8px 12px;
+  border-radius:9px;
+  font-weight:900;
+  color:var(--maroon);
+  font-size:11px;
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:75px;
+  transform:translateX(-50%) translateY(20px);
+  background:#3f0a18;
+  color:#fff;
+  padding:10px 14px;
+  border-radius:10px;
+  font-size:10px;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  z-index:100;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+@media(max-width:600px){
+
+  .topbar{
+    height:58px;
+    padding:6px 10px;
+  }
+
+  .logo{
+    width:41px;
+    height:41px;
+  }
+
+  .brand b{
+    font-size:16px;
+  }
+
+  .wrap{
+    padding:10px 8px 85px;
+  }
+
+  .title h1{
+    font-size:23px;
+  }
+
+  .panel{
+    padding:11px;
+    border-radius:15px;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .field-wrap.full{
+    grid-column:auto;
+  }
+
+  .location-box{
+    flex-direction:column;
+  }
+
+  .loc-btn{
+    height:40px;
+  }
+
+  .cart-row img{
+    width:55px;
+    height:68px;
+  }
+
+  .modal-actions{
+    grid-template-columns:1fr 1.3fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+
+  <div class="brand">
+
+    <img
+      class="logo"
+      src="logo.jpeg"
+      alt="Paramesh logo"
+    >
+
+    <div>
+      <b>Paramesh</b>
+      <span>SAREE PREPLEATING</span>
+    </div>
+
+  </div>
+
+  <button
+    class="back"
+    onclick="history.back()"
+  >
+    ← BACK
+  </button>
+
+</header>
+
+
+<main class="wrap">
+
+  <div class="title">
+
+    <h1>Complete Your Booking</h1>
+
+    <p>
+      Review your sarees, choose your location and tell us which date you want.
+    </p>
+
+  </div>
+
+
+  <!-- CART -->
+
+  <section class="panel">
+
+    <h2>Your Booking</h2>
+
+    <div id="cartItems"></div>
+
+    <div class="summary">
+
+      <div class="sum-line">
+        <span>Saree total</span>
+        <b id="sareeTotal">₹0</b>
+      </div>
+
+      <div class="sum-line">
+        <span>Prepleating total</span>
+        <b id="pleatTotal">₹0</b>
+      </div>
+
+      <div class="sum-line total">
+        <span>Total</span>
+        <b id="grandTotal">₹0</b>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- CUSTOMER DETAILS -->
+
+  <section
+    class="panel"
+    id="formPanel"
+  >
+
+    <h2>Customer Details</h2>
+
+    <div class="form-grid">
+
+      <!-- NAME -->
+
+      <div class="field-wrap">
+
+        <label class="label">
+          Customer name *
+        </label>
+
+        <input
+          id="customerName"
+          class="field"
+          type="text"
+          placeholder="Enter your name"
+          autocomplete="name"
+        >
+
+      </div>
+
+
+      <!-- PHONE -->
+
+      <div class="field-wrap">
+
+        <label class="label">
+          Phone number *
+        </label>
+
+        <input
+          id="customerPhone"
+          class="field"
+          type="tel"
+          placeholder="Enter phone number"
+          autocomplete="tel"
+        >
+
+      </div>
+
+
+      <!-- EMAIL -->
+
+      <div class="field-wrap">
+
+        <label class="label">
+          Email (optional)
+        </label>
+
+        <input
+          id="customerEmail"
+          class="field"
+          type="email"
+          placeholder="name@example.com"
+          autocomplete="email"
+        >
+
+      </div>
+
+
+      <!-- DATE -->
+
+      <div class="field-wrap">
+
+        <label class="label">
+          Which date do you want? *
+        </label>
+
+        <div class="date-box">
+
+          <input
+            id="wantedDate"
+            class="field"
+            type="date"
+          >
+
+          <span class="calendar-icon">
+            ▣
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- LOCATION -->
+
+      <div class="field-wrap full">
+
+        <label class="label">
+          Delivery / Pickup Location *
+        </label>
+
+        <div class="location-box">
+
+          <input
+            id="customerLocation"
+            class="field"
+            type="text"
+            placeholder="Use current location or enter your address"
+          >
+
+          <button
+            id="locationBtn"
+            class="loc-btn"
+            type="button"
+            onclick="useCurrentLocation()"
+          >
+            USE CURRENT LOCATION
+          </button>
+
+        </div>
+
+        <div
+          id="locationStatus"
+          class="location-status"
+        >
+          Use your current device location to automatically find the street / area / city / state / country address.
+        </div>
+
+      </div>
+
+
+      <!-- NOTE -->
+
+      <div class="field-wrap full">
+
+        <label class="label">
+          Additional note (optional)
+        </label>
+
+        <textarea
+          id="notes"
+          class="textarea"
+          placeholder="Any special instructions?"
+        ></textarea>
+
+      </div>
+
+    </div>
+
+
+    <div class="small-note">
+
+      * Required fields. Email is optional.
+      Courier charges are separate and will be confirmed before dispatch.
+
+    </div>
+
+
+    <button
+      id="reviewBtn"
+      class="submit"
+      style="margin-top:12px"
+      onclick="openConfirmation()"
+    >
+      REVIEW &amp; CONFIRM BOOKING
+    </button>
+
+  </section>
+
+
+  <!-- SUCCESS -->
+
+  <section
+    class="panel success"
+    id="successPanel"
+  >
+
+    <div class="success-icon">
+      ✓
+    </div>
+
+    <h2>
+      Booking Received
+    </h2>
+
+    <p>
+      Your booking has been received successfully.
+      We will review your booking and contact you regarding
+      confirmation and courier charges.
+    </p>
+
+    <div
+      class="booking-id"
+      id="bookingId"
+    ></div>
+
+    <p id="emailStatus"></p>
+
+    <button
+      class="submit"
+      onclick="location.href='home.html'"
+    >
+      BACK TO HOME
+    </button>
+
+  </section>
+
+</main>
+
+
+<!-- CONFIRMATION POPUP -->
+
+<div
+  id="confirmModal"
+  class="modal-bg"
+>
+
+  <div class="modal">
+
+    <div class="modal-head">
+
+      <h3>
+        Confirm Your Booking
+      </h3>
+
+    </div>
+
+
+    <div class="modal-body">
+
+      <div class="confirm-box">
+
+        <div class="confirm-title">
+          Please check your details
+        </div>
+
+        <div
+          id="confirmDetails"
+          class="confirm-list"
+        ></div>
+
+      </div>
+
+
+      <div class="courier">
+
+        <strong>
+          Important before confirmation
+        </strong>
+
+        <br><br>
+
+        Your saree prepleating booking total is shown above.
+
+        <br><br>
+
+        <strong>
+          Courier charges are separate.
+        </strong>
+
+        The applicable courier charge will be confirmed
+        with you before dispatch.
+
+        <br><br>
+
+        Please make sure your name, phone number,
+        location and requested date are correct.
+
+        <br><br>
+
+        After you click
+        <strong>OK &amp; CONFIRM BOOKING</strong>,
+        your booking will be sent to our system
+        and will appear in the Admin Panel.
+
+      </div>
+
+
+      <div class="modal-actions">
+
+        <button
+          class="cancel-btn"
+          onclick="closeConfirmation()"
+        >
+          EDIT DETAILS
+        </button>
+
+        <button
+          id="finalConfirmBtn"
+          class="ok-btn"
+          onclick="finalConfirmBooking()"
+        >
+          OK &amp; CONFIRM BOOKING
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div
+  id="toast"
+  class="toast"
+></div>
+
+
+<!-- FIREBASE -->
+
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
+
+
+<!-- EMAILJS -->
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+
+<script>
+
+/* =========================================
+   FIREBASE CONFIG
+========================================= */
+
+const firebaseConfig = {
+  apiKey:"AIzaSyCho5RF5pMpasT8nKz0IBgcX04NAv3ps40",
+  authDomain:"paramesh-saree-prepleati-d2726.firebaseapp.com",
+  databaseURL:"https://paramesh-saree-prepleati-d2726-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"paramesh-saree-prepleati-d2726",
+  storageBucket:"paramesh-saree-prepleati-d2726.firebasestorage.app",
+  messagingSenderId:"88137039026",
+  appId:"1:88137039026:web:99f2f848b5ea5304209dab",
+  measurementId:"G-4RGS712SV3"
+};
+
+
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.database();
+
+
+/* =========================================
+   EMAILJS CONFIG
+
+   PUT YOUR REAL EMAILJS VALUES HERE
+========================================= */
+
+const EMAILJS_PUBLIC_KEY =
+  "rlal3GZ0sKMTsoiO6";
+
+const EMAILJS_SERVICE_ID =
+  "service_prqi472";
+
+const EMAILJS_TEMPLATE_ID =
+  "template_octknn8";
+
+
+if(
+  window.emailjs &&
+  !EMAILJS_PUBLIC_KEY.startsWith("YOUR_")
+){
+
+  emailjs.init({
+    publicKey:EMAILJS_PUBLIC_KEY
+  });
+
+}
+
+
+/* =========================================
+   PRODUCTS
+========================================= */
+
+const seed = [
+
+  {
+    id:'silk-saree',
+    name:'Silk Saree',
+    originalPrice:350,
+    offerPrice:300,
+    badge:'FAST MOVING',
+    ribbon:'BEST'
+  },
+
+  {
+    id:'kanchipuram-silk-saree',
+    name:'Kanchipuram Silk Saree',
+    originalPrice:350,
+    offerPrice:300,
+    badge:'FAST MOVING',
+    ribbon:''
+  },
+
+  {
+    id:'arani-silk',
+    name:'Arani Silk',
+    originalPrice:350,
+    offerPrice:300,
+    badge:'FAST MOVING',
+    ribbon:''
+  },
+
+  {
+    id:'salem-silk',
+    name:'Salem Silk',
+    originalPrice:350,
+    offerPrice:300,
+    badge:'',
+    ribbon:''
+  },
+
+  {
+    id:'thanjavur-silk',
+    name:'Thanjavur Silk',
+    originalPrice:350,
+    offerPrice:300,
+    badge:'OFFER',
+    ribbon:''
+  },
+
+  {
+    id:'cotton-saree',
+    name:'Cotton Saree',
+    originalPrice:300,
+    offerPrice:250,
+    badge:'OFFER',
+    ribbon:''
+  },
+
+  {
+    id:'chettinad-cotton-saree',
+    name:'Chettinad Cotton Saree',
+    originalPrice:300,
+    offerPrice:250,
+    badge:'',
+    ribbon:''
+  },
+
+  {
+    id:'kalamkari-cotton-saree',
+    name:'Kalamkari cotton Saree',
+    originalPrice:300,
+    offerPrice:250,
+    badge:'',
+    ribbon:''
+  },
+
+  {
+    id:'space-silk-saree',
+    name:'Space silk saree',
+    originalPrice:250,
+    offerPrice:200,
+    badge:'',
+    ribbon:''
+  },
+
+  {
+    id:'crush-space-silk-saree',
+    name:'Crush Space Silk saree',
+    originalPrice:250,
+    offerPrice:200,
+    badge:'',
+    ribbon:''
+  },
+
+  {
+    id:'banaras-saree',
+    name:'Banaras Saree',
+    originalPrice:300,
+    offerPrice:250,
+    badge:'',
+    ribbon:''
+  }
+
+];
+
+
+let products=[...seed];
+
+let charges={
+  boxFolding:0,
+  buffer:100,
+  hangover:200
+};
+
+
+let cart=
+  JSON.parse(
+    localStorage.getItem('paramesh_cart') || '[]'
+  );
+
+
+let pendingBooking=null;
+
+
+/* =========================================
+   HELPERS
+========================================= */
+
+function money(n){
+
+  return '₹'+
+    Number(n||0).toLocaleString('en-IN');
+
+}
+
+
+function typeName(t){
+
+  if(t==='boxFolding')
+    return 'Box Folding';
+
+  if(t==='buffer')
+    return 'Buffer';
+
+  return 'Hangover';
+
+}
+
+
+function charge(t){
+
+  return Number(charges[t]||0);
+
+}
+
+
+function imgPath(id){
+
+  return 'images/'+id+'.jpg';
+
+}
+
+
+function esc(s){
+
+  return String(s??'').replace(
+
+    /[&<>"']/g,
+
+    m=>({
+
+      '&':'&amp;',
+      '<':'&lt;',
+      '>':'&gt;',
+      '"':'&quot;',
+      "'":'&#039;'
+
+    }[m])
+
+  );
+
+}
+
+
+function saveCart(){
+
+  localStorage.setItem(
+    'paramesh_cart',
+    JSON.stringify(cart)
+  );
+
+}
+
+
+function findProduct(id){
+
+  return products.find(
+    p=>p.id===id
+  ) ||
+  seed.find(
+    p=>p.id===id
+  );
+
+}
+
+
+/* =========================================
+   TOTAL
+========================================= */
+
+function totals(){
+
+  let sareeTotal=0;
+  let pleatTotal=0;
+
+  cart.forEach(item=>{
+
+    const p=findProduct(item.id);
+
+    const q=Number(item.qty||0);
+
+    if(!p)return;
+
+    sareeTotal +=
+      Number(p.offerPrice||0)*q;
+
+    pleatTotal +=
+      charge(item.type)*q;
+
+  });
+
+  return {
+
+    sareeTotal,
+    pleatTotal,
+    total:sareeTotal+pleatTotal
+
+  };
+
+}
+
+
+/* =========================================
+   RENDER CART
+========================================= */
+
+function render(){
+
+  const el=
+    document.getElementById('cartItems');
+
+
+  if(!cart.length){
+
+    el.innerHTML=`
+
+      <div
+        style="
+          padding:15px;
+          text-align:center;
+          color:#76686b;
+          font-size:11px
+        "
+      >
+        Your cart is empty.
+        Please go back and add a saree.
+      </div>
+
+    `;
+
+    document.getElementById(
+      'reviewBtn'
+    ).disabled=true;
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    'reviewBtn'
+  ).disabled=false;
+
+
+  el.innerHTML=
+
+    cart.map((item,i)=>{
+
+      const p=findProduct(item.id);
+
+      if(!p)return '';
+
+      const q=
+        Number(item.qty||1);
+
+      const line=
+        (
+          Number(p.offerPrice||0)
+          +
+          charge(item.type)
+        )*q;
+
+
+      return `
+
+        <div class="cart-row">
+
+          <img
+            src="${imgPath(p.id)}"
+            alt="${esc(p.name)}"
+            onerror="this.style.display='none'"
+          >
+
+          <div class="ci">
+
+            <b>
+              ${esc(p.name)}
+            </b>
+
+            <div class="meta">
+              ${esc(typeName(item.type))}
+              •
+              ${money(charge(item.type))}
+              prepleating
+            </div>
+
+            <div class="qty">
+
+              <button
+                onclick="changeQty(${i},-1)"
+              >
+                −
+              </button>
+
+              <span>
+                ${q}
+              </span>
+
+              <button
+                onclick="changeQty(${i},1)"
+              >
+                +
+              </button>
+
+            </div>
+
+          </div>
+
+          <div class="line-total">
+            ${money(line)}
+          </div>
+
+        </div>
+
+      `;
+
+    }).join('');
+
+
+  const t=totals();
+
+
+  document.getElementById(
+    'sareeTotal'
+  ).textContent=money(t.sareeTotal);
+
+
+  document.getElementById(
+    'pleatTotal'
+  ).textContent=money(t.pleatTotal);
+
+
+  document.getElementById(
+    'grandTotal'
+  ).textContent=money(t.total);
+
+}
+
+
+/* =========================================
+   QUANTITY
+========================================= */
+
+function changeQty(i,d){
+
+  if(!cart[i])return;
+
+  cart[i].qty=
+    Number(cart[i].qty||1)+d;
+
+
+  if(cart[i].qty<=0){
+
+    cart.splice(i,1);
+
+  }
+
+
+  saveCart();
+
+  render();
+
+}
+
+
+/* =========================================
+   CURRENT LOCATION
+========================================= */
+
+async function reverseGeocode(lat,lng){
+  const url=
+    'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' +
+    encodeURIComponent(lat) +
+    '&lon=' +
+    encodeURIComponent(lng) +
+    '&zoom=18&addressdetails=1';
+
+  const response=await fetch(url,{
+    headers:{'Accept':'application/json'}
+  });
+
+  if(!response.ok){
+    throw new Error('Address lookup failed');
+  }
+
+  const data=await response.json();
+  const a=data.address||{};
+
+  const house = a.house_number || '';
+  const road = a.road || a.pedestrian || a.footway || '';
+  const area = a.neighbourhood || a.suburb || a.residential || a.village || a.hamlet || '';
+  const town = a.town || a.city || a.municipality || a.county || '';
+  const district = a.state_district || '';
+  const state = a.state || '';
+  const postcode = a.postcode || '';
+  const country = a.country || 'India';
+
+  const streetLine = [house,road].filter(Boolean).join(', ');
+  const parts = [streetLine,area,town,district,state,postcode,country].filter(Boolean);
+  const unique=[];
+  parts.forEach(x=>{ if(x && !unique.includes(x)) unique.push(x); });
+
+  return unique.join(', ') || data.display_name || '';
+}
+
+function useCurrentLocation(){
+  const btn=document.getElementById('locationBtn');
+  const status=document.getElementById('locationStatus');
+  const input=document.getElementById('customerLocation');
+
+  if(!navigator.geolocation){
+    status.textContent='Current location is not supported by this browser. Please enter your full address manually.';
+    return;
+  }
+
+  btn.disabled=true;
+  btn.textContent='FINDING ADDRESS...';
+  status.className='location-status';
+  status.textContent='Getting your current position and finding the full address...';
+
+  navigator.geolocation.getCurrentPosition(
+    async pos=>{
+      try{
+        const address=await reverseGeocode(pos.coords.latitude,pos.coords.longitude);
+        if(!address) throw new Error('No address found');
+
+        input.value=address;
+        status.className='location-status ok';
+        status.textContent='✓ Full address found. Check it and edit if needed.';
+        btn.textContent='ADDRESS FOUND';
+      }catch(error){
+        console.error(error);
+        status.className='location-status';
+        status.textContent='Address lookup failed. Please enter your full address manually.';
+        btn.textContent='TRY AGAIN';
+      }finally{
+        btn.disabled=false;
+      }
+    },
+    ()=>{
+      btn.disabled=false;
+      btn.textContent='USE CURRENT LOCATION';
+      status.className='location-status';
+      status.textContent='Could not access your location. Please allow location permission or enter the full address manually.';
+    },
+    {enableHighAccuracy:true,timeout:15000,maximumAge:0}
+  );
+}
+
+
+/* =========================================
+   GET FORM
+========================================= */
+
+function getFormData(){
+
+  const name=
+    document.getElementById(
+      'customerName'
+    ).value.trim();
+
+
+  const phone=
+    document.getElementById(
+      'customerPhone'
+    ).value.trim();
+
+
+  const email=
+    document.getElementById(
+      'customerEmail'
+    ).value.trim();
+
+
+  const wantedDate=
+    document.getElementById(
+      'wantedDate'
+    ).value;
+
+
+  const location=
+    document.getElementById(
+      'customerLocation'
+    ).value.trim();
+
+
+  const notes=
+    document.getElementById(
+      'notes'
+    ).value.trim();
+
+
+  if(
+    !name ||
+    !phone ||
+    !wantedDate ||
+    !location
+  ){
+
+    toast(
+      'Please complete all required fields.'
+    );
+
+    return null;
+
+  }
+
+
+  if(
+    email &&
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  ){
+
+    toast(
+      'Please enter a valid email or leave it empty.'
+    );
+
+    return null;
+
+  }
+
+
+  return {
+
+    customerName:name,
+
+    phone:phone,
+
+    email:email,
+
+    wantedDate:wantedDate,
+
+    location:location,
+
+    notes:notes,
+
+  };
+
+}
+
+
+/* =========================================
+   DATE FORMAT
+========================================= */
+
+function formatDate(v){
+
+  if(!v)return '—';
+
+  const d=
+    new Date(v+'T00:00:00');
+
+
+  return d.toLocaleDateString(
+    'en-IN',
+    {
+      day:'2-digit',
+      month:'long',
+      year:'numeric'
+    }
+  );
+
+}
+
+
+/* =========================================
+   OPEN CONFIRMATION
+========================================= */
+
+function openConfirmation(){
+
+  if(!cart.length){
+
+    toast(
+      'Your cart is empty.'
+    );
+
+    return;
+
+  }
+
+
+  const data=getFormData();
+
+  if(!data)return;
+
+
+  pendingBooking=data;
+
+
+  const t=totals();
+
+
+  document.getElementById(
+    'confirmDetails'
+  ).innerHTML=
+
+    `<b>Name:</b>
+      ${esc(data.customerName)}
+      <br>
+
+     <b>Phone:</b>
+      ${esc(data.phone)}
+      <br>
+
+     <b>Email:</b>
+      ${esc(data.email||'Not provided')}
+      <br>
+
+     <b>Requested date:</b>
+      ${esc(formatDate(data.wantedDate))}
+      <br>
+
+     <b>Location:</b>
+      ${esc(data.location)}
+      <br>
+
+     <b>Total:</b>
+      ${money(t.total)}`;
+
+
+  document.getElementById(
+    'confirmModal'
+  ).style.display='flex';
+
+}
+
+
+/* =========================================
+   CLOSE
+========================================= */
+
+function closeConfirmation(){
+
+  document.getElementById(
+    'confirmModal'
+  ).style.display='none';
+
+}
+
+
+/* =========================================
+   EMAILJS
+========================================= */
+
+async function sendBookingEmail(bookingId, booking){
+  if(!window.emailjs){
+    return {sent:false,reason:'EmailJS library not loaded'};
+  }
+  if(EMAILJS_PUBLIC_KEY.startsWith('YOUR_') || EMAILJS_SERVICE_ID.startsWith('YOUR_') || EMAILJS_TEMPLATE_ID.startsWith('YOUR_')){
+    return {sent:false,reason:'EmailJS is not configured yet'};
+  }
+  if(!booking.email){
+    return {sent:false,reason:'Customer email not provided'};
+  }
+
+  const itemsText = booking.items.map((x,i)=>[
+    `${i+1}. ${x.sareeName}`,
+    `Prepleating: ${x.prepleatingType}`,
+    `Quantity: ${x.quantity}`,
+    `Ribbon: ${x.ribbon || 'No ribbon'}`,
+    `Saree unit price: ${money(x.unitPrice)}`,
+    `Prepleating unit charge: ${money(x.prepleatingCharge)}`,
+    `Saree subtotal: ${money(x.sareeSubtotal)}`,
+    `Prepleating subtotal: ${money(x.prepleatingSubtotal)}`,
+    `Item total: ${money(x.lineTotal)}`
+  ].join('\n')).join('\n\n');
+
+  const allData = [
+    `BOOKING ID: ${bookingId}`,
+    `STATUS: ${booking.status}`,
+    '',
+    'CUSTOMER DETAILS',
+    `Name: ${booking.customerName}`,
+    `Phone: ${booking.phone}`,
+    `Email: ${booking.email || 'Not provided'}`,
+    '',
+    'BOOKING DETAILS',
+    `Requested date: ${formatDate(booking.wantedDate)}`,
+    `Location: ${booking.location}`,
+    `Notes: ${booking.notes || 'None'}`,
+    '',
+    'ITEMS',
+    itemsText || 'No items',
+    '',
+    'TOTALS',
+    `Saree total: ${money(booking.sareeTotal)}`,
+    `Prepleating total: ${money(booking.prepleatingTotal)}`,
+    `Grand total: ${money(booking.total)}`,
+    `Courier charge: ${booking.courierCharge}`,
+    '',
+    `Created: ${new Date().toLocaleString('en-IN')}`
+  ].join('\n');
+
+  try{
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      to_email:booking.email,
+      reply_to:booking.email,
+      customer_name:booking.customerName,
+      customer_phone:booking.phone,
+      customer_email:booking.email || 'Not provided',
+      booking_id:bookingId,
+      booking_status:booking.status,
+      requested_date:formatDate(booking.wantedDate),
+      location:booking.location,
+      notes:booking.notes || 'None',
+      items:itemsText,
+      saree_total:money(booking.sareeTotal),
+      prepleating_total:money(booking.prepleatingTotal),
+      total:money(booking.total),
+      courier_message:booking.courierCharge,
+      all_booking_data:allData,
+      message:allData
+    });
+    return {sent:true};
+  }catch(error){
+    console.error('EmailJS error:',error);
+    return {sent:false,reason:error?.text || error?.message || 'Email could not be sent'};
+  }
+}
+
+/* =========================================
+   FINAL CONFIRM BOOKING
+========================================= */
+
+async function finalConfirmBooking(){
+
+  if(!pendingBooking)return;
+
+
+  const btn=
+    document.getElementById(
+      'finalConfirmBtn'
+    );
+
+
+  btn.disabled=true;
+
+  btn.textContent=
+    'SENDING...';
+
+
+  const t=totals();
+
+
+  const items=
+
+    cart.map(item=>{
+
+      const p=
+        findProduct(item.id);
+
+      const q=
+        Number(item.qty||0);
+
+
+      const unitPrice=Number(p?.offerPrice||0);
+      const prepleatingCharge=charge(item.type);
+      const sareeSubtotal=unitPrice*q;
+      const prepleatingSubtotal=prepleatingCharge*q;
+      const lineTotal=sareeSubtotal+prepleatingSubtotal;
+
+      return {
+        id:item.id,
+        sareeName:p?p.name:item.id,
+        prepleatingType:typeName(item.type),
+        prepleatingKey:item.type,
+        quantity:q,
+        originalPrice:Number(p?.originalPrice||unitPrice),
+        unitPrice:unitPrice,
+        prepleatingCharge:prepleatingCharge,
+        sareeSubtotal:sareeSubtotal,
+        prepleatingSubtotal:prepleatingSubtotal,
+        lineTotal:lineTotal,
+        ribbon:p?.ribbon || ''
+      };
+
+    });
+
+
+  const booking={
+
+    customerName:
+      pendingBooking.customerName,
+
+    phone:
+      pendingBooking.phone,
+
+    email:
+      pendingBooking.email,
+
+    location:
+      pendingBooking.location,
+
+    notes:
+      pendingBooking.notes,
+
+    wantedDate:
+      pendingBooking.wantedDate,
+
+    sareeName:
+      items
+        .map(x=>x.sareeName)
+        .join(', '),
+
+    prepleatingType:
+      items
+        .map(x=>x.prepleatingType)
+        .join(', '),
+
+    quantity:
+      items.reduce(
+        (s,x)=>s+x.quantity,
+        0
+      ),
+
+    sareeTotal:
+      t.sareeTotal,
+
+    prepleatingTotal:
+      t.pleatTotal,
+
+    total:
+      t.total,
+
+    courierCharge:
+      'To be confirmed separately before dispatch',
+
+    items:items,
+
+    status:
+      'Pending',
+
+    createdAt:
+      firebase.database.ServerValue.TIMESTAMP
+
+  };
+
+
+  try{
+
+    /*
+      FIRST save booking to Firebase.
+      This makes sure Admin Panel gets it.
+    */
+
+    const ref=
+      await db
+        .ref('bookings')
+        .push(booking);
+
+
+    const bookingId=
+      ref.key;
+
+
+    /*
+      THEN send optional email.
+    */
+
+    const emailResult=
+      await sendBookingEmail(
+        bookingId,
+        booking
+      );
+
+
+    /*
+      Clear cart only after
+      Firebase booking succeeds.
+    */
+
+    cart=[];
+
+    saveCart();
+
+
+    closeConfirmation();
+
+
+    document.getElementById(
+      'formPanel'
+    ).style.display='none';
+
+
+    document.getElementById(
+      'bookingId'
+    ).textContent=
+      'Booking ID: '+bookingId;
+
+
+    document.getElementById(
+      'emailStatus'
+    ).textContent=
+
+      emailResult.sent
+      ? 'A detailed confirmation email has been sent to '+booking.email+'.'
+      : (booking.email
+          ? 'Booking saved successfully, but the confirmation email could not be sent.'
+          : 'Booking saved successfully. No email was provided.');
+
+
+    document.getElementById(
+      'successPanel'
+    ).style.display='block';
+
+
+    window.scrollTo({
+      top:0,
+      behavior:'smooth'
+    });
+
+
+  }catch(err){
+
+    console.error(err);
+
+
+    toast(
+      'Booking failed. Please check Firebase rules.'
+    );
+
+
+    btn.disabled=false;
+
+    btn.textContent=
+      'OK & CONFIRM BOOKING';
+
+  }
+
+}
+
+
+/* =========================================
+   MODAL BACKGROUND
+========================================= */
+
+document
+  .getElementById(
+    'confirmModal'
+  )
+  .addEventListener(
+    'click',
+    e=>{
+
+      if(
+        e.target ===
+        document.getElementById(
+          'confirmModal'
+        )
+      ){
+
+        closeConfirmation();
+
+      }
+
+    }
+  );
+
+
+/* =========================================
+   MINIMUM DATE = TODAY
+========================================= */
+
+const today=
+  new Date();
+
+
+const yyyy=
+  today.getFullYear();
+
+
+const mm=
+  String(
+    today.getMonth()+1
+  ).padStart(2,'0');
+
+
+const dd=
+  String(
+    today.getDate()
+  ).padStart(2,'0');
+
+
+document.getElementById(
+  'wantedDate'
+).min=
+  `${yyyy}-${mm}-${dd}`;
+
+
+/* =========================================
+   FIREBASE PRODUCTS
+========================================= */
+
+db.ref('products').on(
+  'value',
+  snap=>{
+
+    const data=snap.val();
+
+
+    if(data){
+
+      products=
+        Object.keys(data).map(
+          id=>({
+            ...seed.find(
+              x=>x.id===id
+            ),
+            ...data[id],
+            id:id
+          })
+        );
+
+
+      seed.forEach(s=>{
+
+        if(
+          !products.some(
+            p=>p.id===s.id
+          )
+        ){
+
+          products.push(s);
+
+        }
+
+      });
+
+    }
+
+
+    render();
+
+  }
+);
+
+
+/* =========================================
+   PREPLEATING CHARGES
+========================================= */
+
+db.ref('prepleating').on(
+  'value',
+  snap=>{
+
+    const data=snap.val();
+
+
+    if(data){
+
+      charges={
+
+        boxFolding:
+          Number(
+            data.boxFolding ?? 0
+          ),
+
+        buffer:
+          Number(
+            data.buffer ?? 100
+          ),
+
+        hangover:
+          Number(
+            data.hangover ?? 200
+          )
+
+      };
+
+    }
+
+
+    render();
+
+  }
+);
+
+
+/* =========================================
+   TOAST
+========================================= */
+
+function toast(msg){
+
+  const el=
+    document.getElementById(
+      'toast'
+    );
+
+
+  el.textContent=msg;
+
+  el.classList.add('show');
+
+
+  clearTimeout(
+    window.__toast
+  );
+
+
+  window.__toast=
+    setTimeout(
+      ()=>{
+        el.classList.remove('show');
+      },
+      2800
+    );
+
+}
+
+
+render();
+
+</script>
+
+</body>
+</html>

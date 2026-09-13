@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Paramesh Admin Panel</title>
+<script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-database-compat.js"></script>
+<style>
+:root{
+  --maroon:#5a1025;--deep:#300613;--wine:#761d3a;--gold:#c99d4c;--gold2:#f0d58e;
+  --cream:#fffaf3;--bg:#f7f3ee;--card:#fff;--line:#eadfd3;--text:#2b2022;--muted:#7b6d70;
+  --green:#1c8050;--red:#a52c35;--blue:#315f9d;--shadow:0 8px 26px rgba(54,10,25,.08)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;overflow-x:hidden}
+button,input,select{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+
+/* Login */
+.login{min-height:100svh;display:flex;align-items:center;justify-content:center;padding:18px;background:
+ radial-gradient(circle at 15% 15%,#a24b6426,transparent 32%),
+ radial-gradient(circle at 85% 85%,#d3ad5d24,transparent 35%),
+ linear-gradient(135deg,#300613,#68152e 55%,#3b0717)}
+.login-box{width:min(390px,100%);background:#fff;border:1px solid #ffffff40;border-radius:24px;padding:28px 22px;
+ box-shadow:0 25px 70px #17030c70;text-align:center}
+.logo{width:76px;height:76px;border-radius:50%;object-fit:cover;border:3px solid var(--gold);padding:2px;background:#fff}
+.login-box h1{font:700 27px Georgia,serif;color:var(--deep);margin:10px 0 3px}
+.login-box p{font-size:11px;letter-spacing:1.5px;color:var(--muted);margin:0 0 21px}
+.field{width:100%;height:46px;border:1px solid var(--line);border-radius:12px;padding:0 13px;margin-bottom:10px;outline:none;background:#fff}
+.field:focus{border-color:var(--gold);box-shadow:0 0 0 3px #c99d4c18}
+.login-btn,.save{width:100%;border:0;border-radius:12px;background:linear-gradient(135deg,var(--deep),var(--maroon));color:#fff;padding:12px;font-weight:900;letter-spacing:.5px;box-shadow:0 6px 15px #5a102528}
+.error{color:#b3261e;font-size:11px;margin-top:9px;min-height:15px}
+
+/* PIN GATE — full-page warning, responsive on mobile */
+.pin-gate{
+  min-height:100svh;
+  width:100%;
+  padding:26px 24px 30px;
+  background:
+    radial-gradient(circle at 10% 0%,#d1a24d16,transparent 28%),
+    radial-gradient(circle at 100% 100%,#8b244317,transparent 30%),
+    linear-gradient(145deg,#26040f 0%,#3f0a18 52%,#26040f 100%);
+  color:#f8eee8;
+}
+.pin-page{
+  width:min(900px,100%);
+  margin:0 auto;
+  display:block;
+}
+.pin-header{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:0 0 17px;
+  border-bottom:1px solid #d6b05b33;
+}
+.pin-logo{
+  width:58px;height:58px;border-radius:50%;object-fit:cover;
+  border:2px solid var(--gold2);padding:2px;background:#fff;
+  box-shadow:0 7px 20px #12020a55;flex:none;
+}
+.pin-brand b{
+  display:block;font:700 25px Georgia,serif;color:#fff9f0;
+  line-height:1.15;
+}
+.pin-brand span{
+  display:block;font-size:8px;letter-spacing:2px;color:#f0d58e;
+  margin-top:4px;font-weight:900;
+}
+.pin-intro{
+  font-size:13px;line-height:1.85;color:#eadbd5;
+  margin:20px 0 17px;
+  max-width:820px;
+}
+.pin-notice{
+  margin:0 0 18px;
+  padding:0;
+  background:transparent;
+  border:0;
+  border-left:3px solid var(--gold2);
+  border-radius:0;
+  box-shadow:none;
+}
+.pin-notice p{
+  margin:0 0 14px;
+  padding-left:16px;
+  font-size:12px;
+  line-height:1.9;
+  color:#eaded8;
+}
+.pin-notice p:last-child{margin-bottom:0}
+.pin-notice b{color:#ffe7a2}
+.pin-note-line{
+  font-size:12px;color:#eaded8;line-height:1.85;margin:2px 0 10px;
+}
+.pin-note-line strong{color:#ffe7a2}
+.pin-help{
+  font-size:12px;color:#d9c8c3;line-height:1.85;margin:0;
+}
+.pin-access{
+  margin-top:22px;
+  padding-top:20px;
+  border-top:1px solid #d6b05b33;
+}
+.pin-label{
+  font-size:11px;font-weight:900;letter-spacing:.8px;
+  color:#f8e8d5;margin-bottom:8px;
+}
+.pin-row{display:grid;grid-template-columns:1fr 64px;gap:10px}
+.pin-input{
+  width:100%;height:54px;
+  border:1px solid #d9bd8366;border-radius:11px;
+  background:#fffaf312;color:#fff;outline:none;
+  padding:0 14px;text-align:left;font-size:17px;letter-spacing:5px;
+}
+.pin-input::placeholder{color:#d7c6c0;letter-spacing:1px}
+.pin-input:focus{
+  border-color:var(--gold2);box-shadow:0 0 0 3px #c99d4c20;background:#fffaf31c;
+}
+.pin-check{
+  height:54px;border:1px solid #edcf83;border-radius:11px;
+  background:linear-gradient(135deg,#f7df98,#c99d4c);
+  color:#421021;font-size:28px;font-weight:900;
+  box-shadow:0 8px 18px #09010755;
+}
+.pin-check:active{transform:scale(.97)}
+.pin-error{min-height:18px;margin-top:8px;font-size:10px;color:#ffb5b5;font-weight:800}
+.pin-footer{margin-top:11px;font-size:9px;color:#bdaaaa;line-height:1.6}
+#admin{display:none}
+
+@media(max-width:600px){
+  .pin-gate{
+    min-height:100svh;
+    padding:15px 13px 18px;
+  }
+  .pin-page{
+    width:100%;
+  }
+  .pin-header{
+    gap:10px;
+    padding-bottom:12px;
+  }
+  .pin-logo{width:43px;height:43px}
+  .pin-brand b{font-size:16px}
+  .pin-brand span{font-size:6px;letter-spacing:1.5px;margin-top:3px}
+  .pin-intro{
+    font-size:10px;
+    line-height:1.65;
+    margin:13px 0 12px;
+    max-width:none;
+  }
+  .pin-notice{
+    border-left-width:2px;
+    margin-bottom:12px;
+  }
+  .pin-notice p{
+    font-size:8.8px;
+    line-height:1.62;
+    padding-left:10px;
+    margin-bottom:8px;
+  }
+  .pin-note-line,.pin-help{
+    font-size:8.8px;
+    line-height:1.62;
+  }
+  .pin-note-line{margin:2px 0 7px}
+  .pin-access{
+    margin-top:14px;
+    padding-top:13px;
+  }
+  .pin-label{font-size:8.5px;margin-bottom:6px}
+  .pin-row{grid-template-columns:1fr 48px;gap:7px}
+  .pin-input{height:43px;font-size:14px;letter-spacing:4px;padding:0 11px}
+  .pin-check{height:43px;font-size:22px}
+  .pin-error{font-size:8.5px;min-height:15px;margin-top:5px}
+  .pin-footer{font-size:7.5px;margin-top:7px}
+}
+
+@media(max-width:380px){
+  .pin-gate{padding:11px 10px 14px}
+  .pin-page{width:100%}
+  .pin-brand b{font-size:14px}
+  .pin-brand span{font-size:5.4px}
+  .pin-intro{font-size:9px;margin:10px 0 9px}
+  .pin-notice p{font-size:8px;line-height:1.52;margin-bottom:6px}
+  .pin-note-line,.pin-help{font-size:8px;line-height:1.52}
+  .pin-access{margin-top:10px;padding-top:10px}
+  .pin-input,.pin-check{height:40px}
+}
+
+/* Header */
+/* Header */
+.admin{display:none;min-height:100svh}
+.top{height:68px;background:linear-gradient(135deg,var(--deep),var(--maroon));color:#fff;display:flex;align-items:center;justify-content:space-between;
+ padding:8px max(12px,calc((100vw - 1180px)/2));position:sticky;top:0;z-index:50;box-shadow:0 5px 20px #30061335}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}.brand img{width:45px;height:45px;border-radius:50%;object-fit:cover;border:2px solid var(--gold2);background:#fff}
+.brand b{font:700 18px Georgia,serif;display:block;white-space:nowrap}.brand span{font-size:8px;letter-spacing:1.8px;opacity:.75}
+.logout{border:1px solid #ffffff42;background:#ffffff12;color:#fff;border-radius:10px;padding:9px 12px;font-size:10px;font-weight:800}
+
+/* Navigation */
+.tabs{max-width:1180px;margin:0 auto;padding:10px 12px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;background:var(--bg);position:sticky;top:68px;z-index:40}
+.tab{min-height:43px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:7px 5px;color:#66595c;font-size:11px;font-weight:900;box-shadow:0 2px 8px #3b071708;transition:.2s}
+.tab:hover{transform:translateY(-1px)}
+.tab.active{background:linear-gradient(135deg,var(--deep),var(--maroon));color:#fff;border-color:var(--maroon);box-shadow:0 5px 15px #5a10252a}
+
+/* Main */
+.wrap{max-width:1180px;margin:auto;padding:5px 12px 30px}
+.section{display:none;animation:sectionIn .22s ease}.section.active{display:block}
+@keyframes sectionIn{from{opacity:.2;transform:translateY(5px)}to{opacity:1;transform:none}}
+.title{font:700 27px Georgia,serif;color:var(--deep);margin:10px 0 4px}
+.subtitle{font-size:11px;color:var(--muted);margin:0 0 14px}
+.table-wrap{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+.scroll-table{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{padding:11px;border-bottom:1px solid var(--line);text-align:left;font-size:11px;vertical-align:middle}
+th{background:var(--cream);color:#624b37;font-size:9px;letter-spacing:.4px;position:sticky;top:0;z-index:1}
+tr:last-child td{border-bottom:0}
+td input,td select{height:35px;border:1px solid var(--line);border-radius:8px;padding:0 8px;width:100%;min-width:75px;outline:none}
+td input:focus,td select:focus{border-color:var(--gold)}
+.save-small{border:0;border-radius:8px;background:var(--maroon);color:#fff;padding:8px 10px;font-size:9px;font-weight:900}
+.badge{display:inline-flex;padding:5px 8px;border-radius:20px;background:#f5ead8;color:#76582e;font-size:8px;font-weight:900}
+
+/* Price manager */
+.price-manager{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow);max-width:650px}
+.price-label{display:block;font-size:10px;font-weight:900;color:#625356;margin-bottom:6px}
+.price-select{width:100%;height:46px;border:1px solid var(--line);border-radius:11px;padding:0 12px;background:#fff;color:var(--text);outline:none;font-weight:800}
+.price-select:focus{border-color:var(--gold);box-shadow:0 0 0 3px #c99d4c18}
+.price-editor{margin-top:12px;border:1px solid var(--line);border-radius:13px;padding:13px;background:linear-gradient(180deg,#fff,#fffaf5)}
+.selected-saree{font:700 18px Georgia,serif;color:var(--deep);margin-bottom:11px}
+.price-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.price-fields label{display:block;font-size:9px;font-weight:900;color:#625356;margin-bottom:5px}
+.price-fields input{width:100%;height:42px;border:1px solid var(--line);border-radius:10px;padding:0 10px;outline:none}
+.price-fields input:focus{border-color:var(--gold)}
+.price-save{margin-top:11px}
+
+/* Charges */
+.charge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.charge-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.charge-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(var(--gold),var(--maroon))}
+.charge-card h3{margin:0 0 9px;font:700 18px Georgia,serif;color:var(--deep)}
+.charge-card p{font-size:9px;color:var(--muted);margin:0 0 9px}
+.charge-card input{width:100%;height:42px;border:1px solid var(--line);border-radius:10px;padding:0 11px;outline:none}
+.full-save{margin-top:13px;max-width:310px}
+
+/* Bookings */
+.status{height:33px;border:1px solid var(--line);border-radius:8px;padding:0 7px;background:#fff}
+.actions{display:flex;gap:5px;flex-wrap:wrap}
+.action{border:0;border-radius:8px;padding:7px 8px;font-size:8px;font-weight:900}
+.confirm{background:#e8f6ed;color:#17643a}.complete{background:#e7eefb;color:#234c89}.cancel{background:#fdeaea;color:#9b2525}
+
+/* Ribbon manager */
+.ribbon-layout{display:grid;grid-template-columns:minmax(0,580px) minmax(260px,1fr);gap:14px;align-items:start}
+.ribbon-form,.ribbon-preview{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+.ribbon-form label{display:block;font-size:10px;font-weight:900;color:#625356;margin:0 0 6px}
+.ribbon-form select,.ribbon-form input{width:100%;height:42px;border:1px solid var(--line);border-radius:10px;padding:0 11px;margin-bottom:12px;outline:none;background:#fff}
+.ribbon-form select:focus,.ribbon-form input:focus{border-color:var(--gold)}
+.remove-ribbon{background:#fff;border:1px solid #e0caca;color:#8c2c2c;margin-top:8px;box-shadow:none}
+.ribbon-preview h3{font:700 18px Georgia,serif;color:var(--deep);margin:0 0 10px}
+.preview-card{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:#fff;position:relative}
+.preview-img{height:150px;background:linear-gradient(145deg,#f7efe4,#e8d3b7);display:flex;align-items:center;justify-content:center;color:#76582e;font:700 20px Georgia,serif;letter-spacing:2px}
+.preview-body{padding:11px}.preview-name{font:700 14px Georgia,serif}.preview-ribbon{position:absolute;left:-27px;top:11px;width:110px;text-align:center;transform:rotate(-45deg);background:linear-gradient(90deg,#9c7130,#d7b260);color:#fff;font-size:7px;font-weight:900;letter-spacing:1px;padding:4px}
+
+
+/* Combo manager */
+.combo-manager{display:grid;grid-template-columns:minmax(0,650px) minmax(260px,1fr);gap:14px;align-items:start}
+.combo-form,.combo-preview{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+.combo-form label{display:block;font-size:10px;font-weight:900;color:#625356;margin:0 0 6px}
+.combo-form select,.combo-form input{width:100%;height:42px;border:1px solid var(--line);border-radius:10px;padding:0 11px;margin-bottom:11px;outline:none;background:#fff}
+.combo-form select:focus,.combo-form input:focus{border-color:var(--gold)}
+.combo-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.combo-preview h3{font:700 18px Georgia,serif;color:var(--deep);margin:0 0 10px}
+.combo-preview-box{border:1px solid var(--line);border-radius:13px;padding:11px;background:linear-gradient(135deg,#fffaf1,#f6ecdf)}
+.combo-preview-title{font:700 16px Georgia,serif;color:var(--deep);margin-bottom:8px}
+.combo-preview-names{font-size:10px;line-height:1.5;color:#66585a}
+.combo-preview-price{margin-top:9px;padding-top:9px;border-top:1px dashed #dfd0bd;display:flex;gap:8px;align-items:baseline}
+.combo-preview-offer{font-size:21px;font-weight:900;color:var(--maroon)}
+.combo-preview-original{font-size:11px;text-decoration:line-through;color:#9b8b83}
+.combo-toggle{display:flex;align-items:center;gap:8px;margin:0 0 11px;font-size:10px;font-weight:900}
+.combo-toggle input{width:18px;height:18px;margin:0}
+@media(max-width:700px){.combo-manager{grid-template-columns:1fr;gap:7px}.combo-form,.combo-preview{padding:10px;border-radius:11px}.combo-form label{font-size:8px}.combo-form select,.combo-form input{height:36px;font-size:10px;margin-bottom:8px}.combo-pair{gap:7px}.combo-preview h3{font-size:14px}.combo-preview-title{font-size:13px}.combo-preview-offer{font-size:18px}}
+
+/* Firebase connection status */
+.firebase-status{position:fixed;right:12px;bottom:12px;z-index:120;padding:7px 10px;border-radius:999px;font-size:9px;font-weight:900;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}
+.firebase-status.ok{color:#17643a;border-color:#b9dec8}.firebase-status.bad{color:#9b2525;border-color:#e0bcbc}.firebase-status.connecting{color:#8a6830}
+@media(max-width:700px){.firebase-status{right:7px;bottom:7px;font-size:7px;padding:5px 7px}.firebase-status.ok{opacity:.9}}
+
+/* Toast */
+.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);background:#2b2022;color:#fff;padding:10px 14px;border-radius:10px;font-size:10px;opacity:0;pointer-events:none;transition:.25s;z-index:100}.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* Mobile */
+
+.saree-price-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:760px}
+.saree-price-card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:13px;box-shadow:var(--shadow);cursor:pointer;transition:.2s;position:relative}
+.saree-price-card:hover{transform:translateY(-2px);border-color:#b98b45}
+.saree-price-card .sp-name{font-weight:800;font-size:14px;color:var(--ink);line-height:1.25;margin-bottom:8px}
+.saree-price-card .sp-row{display:flex;align-items:baseline;gap:7px;margin-bottom:10px}
+.saree-price-card .sp-offer{font-size:19px;font-weight:900;color:#8b1e2d}
+.saree-price-card .sp-original{font-size:12px;color:#9b8b83;text-decoration:line-through}
+.saree-price-card .sp-action{font-size:10px;font-weight:900;letter-spacing:.7px;color:#9b7138;border-top:1px dashed #e4d7c8;padding-top:8px}
+.price-editor{background:#fff8ef;border:1px solid #d9b879;border-radius:16px;padding:15px;max-width:760px;margin-top:12px;box-shadow:var(--shadow);animation:editorIn .22s ease}
+.editor-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.editor-kicker{font-size:9px;font-weight:900;letter-spacing:1.3px;color:#a4773c}
+.close-editor{border:1px solid #dccbb7;background:#fff;border-radius:50%;width:30px;height:30px;font-size:20px;line-height:1;cursor:pointer;color:#6d4a32}
+@keyframes editorIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+@media(max-width:700px){.saree-price-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.saree-price-card{padding:10px;border-radius:12px}.saree-price-card .sp-name{font-size:12px;min-height:30px}.saree-price-card .sp-offer{font-size:16px}.saree-price-card .sp-original{font-size:10px}.saree-price-card .sp-action{font-size:8px;padding-top:7px}.price-editor{padding:12px;border-radius:13px}.price-fields{grid-template-columns:1fr 1fr;gap:8px}.price-fields input{font-size:14px;padding:10px}}
+
+@media(max-width:700px){
+ body{background:#f9f6f2}
+ .login{padding:12px}.login-box{padding:23px 16px;border-radius:20px}
+ .logo{width:68px;height:68px}.login-box h1{font-size:23px}
+ .top{height:58px;padding:6px 8px}.brand{gap:7px}.brand img{width:38px;height:38px}
+ .brand b{font-size:14px}.brand span{font-size:6.5px;letter-spacing:1.3px}
+ .logout{padding:8px 9px;font-size:9px}
+ .tabs{top:58px;padding:6px;gap:4px}
+ .tab{min-height:42px;border-radius:10px;font-size:8px;padding:6px 2px;line-height:1.15}
+ .wrap{padding:4px 7px 25px}
+ .title{font-size:20px;margin:9px 2px 3px}.subtitle{font-size:9px;margin:0 2px 10px}
+ .table-wrap{border-radius:12px}
+ .scroll-table{overflow-x:auto}
+ th,td{padding:8px 7px;font-size:9px}
+ th{font-size:8px}
+ td input,td select{height:32px;font-size:9px}
+ .save-small{padding:7px 8px;font-size:8px}
+ .charge-grid{grid-template-columns:1fr;gap:7px}
+ .charge-card{border-radius:12px;padding:11px}
+ .charge-card h3{font-size:15px;margin-bottom:5px}.charge-card p{display:none}
+ .charge-card input{height:38px}
+ .full-save{max-width:none;margin-top:8px}
+ .ribbon-layout{grid-template-columns:1fr;gap:8px}
+ .ribbon-form,.ribbon-preview{border-radius:12px;padding:12px}
+ .ribbon-form label{font-size:9px}.ribbon-form select,.ribbon-form input{height:39px;margin-bottom:9px}
+ .ribbon-preview{display:block}
+ .preview-img{height:105px}
+ .preview-body{padding:8px}.preview-name{font-size:12px}
+ .actions{gap:3px}.action{padding:6px 7px;font-size:7px}
+}
+
+/* Very small phones */
+@media(max-width:380px){
+ .top{padding-left:6px;padding-right:6px}.brand b{font-size:12px}.brand span{font-size:6px}
+ .brand img{width:35px;height:35px}.logout{font-size:8px;padding:7px}
+ .tabs{gap:3px;padding:5px}.tab{font-size:7px;min-height:40px}
+ .wrap{padding-left:5px;padding-right:5px}
+ .title{font-size:18px}
+ .subtitle{font-size:8px}
+ .charge-card{padding:9px}.charge-card h3{font-size:14px}
+}
+
+/* Extra compact mobile admin UI */
+@media(max-width:700px){
+  .admin{min-height:100svh}
+  .top{height:52px;padding:5px 7px}
+  .brand{gap:6px}.brand img{width:34px;height:34px}.brand b{font-size:13px}.brand span{font-size:5.5px}
+  .logout{padding:6px 8px;border-radius:8px;font-size:8px}
+  .tabs{top:52px;padding:5px;gap:3px}.tab{min-height:36px;border-radius:8px;font-size:7px;padding:5px 2px}
+  .wrap{padding:3px 6px 18px}.title{font-size:18px;margin:7px 2px 2px}.subtitle{font-size:8px;margin:0 2px 7px}
+  .saree-price-list{gap:6px}.saree-price-card{padding:8px;border-radius:10px}.saree-price-card .sp-name{font-size:10px;min-height:25px;margin-bottom:5px}.saree-price-card .sp-row{gap:5px;margin-bottom:6px}.saree-price-card .sp-offer{font-size:14px}.saree-price-card .sp-original{font-size:8px}.saree-price-card .sp-action{font-size:7px;padding-top:5px}
+  .price-editor{padding:9px;border-radius:11px;margin-top:7px}.editor-head{margin-bottom:8px}.editor-kicker{font-size:7px}.selected-saree{font-size:15px;margin-bottom:7px}.close-editor{width:25px;height:25px;font-size:16px}.price-fields{gap:6px}.price-fields label{font-size:7px;margin-bottom:3px}.price-fields input{height:34px;font-size:12px;border-radius:8px}.price-save{margin-top:7px;padding:9px;font-size:9px;border-radius:9px}
+  .charge-grid{gap:5px}.charge-card{padding:8px;border-radius:10px}.charge-card h3{font-size:13px;margin-bottom:4px}.charge-card input{height:33px;font-size:12px;border-radius:8px}.full-save{padding:9px;font-size:9px}
+  .table-wrap{border-radius:10px}.scroll-table{overflow-x:auto}.scroll-table table{min-width:650px}th,td{padding:6px 5px;font-size:8px}th{font-size:7px}td input,td select{height:29px;font-size:8px;padding:0 5px}.status{height:28px;font-size:8px}.save-small{padding:6px 6px;font-size:7px}.action{padding:5px 5px;font-size:6.5px}
+  .ribbon-layout{gap:6px}.ribbon-form,.ribbon-preview{padding:9px;border-radius:10px}.ribbon-form label{font-size:7px;margin-bottom:4px}.ribbon-form select,.ribbon-form input{height:34px;font-size:10px;padding:0 8px;margin-bottom:7px;border-radius:8px}.ribbon-form .save{padding:9px;font-size:8px;border-radius:9px}.remove-ribbon{margin-top:5px}
+  .ribbon-preview h3{font-size:14px;margin-bottom:7px}.preview-card{border-radius:10px}.preview-img{height:82px;font-size:15px}.preview-body{padding:6px}.preview-name{font-size:10px}.preview-ribbon{left:-24px;top:8px;width:90px;font-size:6px;padding:3px}
+}
+@media(max-width:380px){
+  .top{height:49px}.tabs{top:49px}.brand img{width:32px;height:32px}.brand b{font-size:12px}.brand span{font-size:5px}.logout{font-size:7px;padding:6px}
+  .tab{min-height:34px;font-size:6.5px}.wrap{padding-left:5px;padding-right:5px}.title{font-size:17px}
+  .saree-price-list{gap:5px}.saree-price-card{padding:7px}.saree-price-card .sp-name{font-size:9.5px}.saree-price-card .sp-offer{font-size:13px}.saree-price-card .sp-original{font-size:7.5px}
+  .ribbon-form,.ribbon-preview{padding:8px}.preview-img{height:75px}
+}
+
+/* Mobile-first admin accordions and add options */
+.admin-fold{background:#fff;border:1px solid var(--line);border-radius:16px;margin:0 0 12px;overflow:hidden;box-shadow:var(--shadow)}
+.admin-fold summary{list-style:none;cursor:pointer;padding:14px 15px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:900;color:var(--deep);font-size:12px;background:linear-gradient(135deg,#fffaf3,#fff)}
+.admin-fold summary::-webkit-details-marker{display:none}
+.admin-fold summary span{display:flex;align-items:center;gap:8px;min-width:0}.admin-fold summary small{font-size:8px;color:var(--muted);font-weight:700}.admin-fold summary>b{font-size:8px;color:var(--gold);border:1px solid #e7d2aa;border-radius:20px;padding:5px 8px;white-space:nowrap}
+.admin-fold[open] summary>b{background:#fff5df}
+.admin-fold-body{padding:12px;border-top:1px solid var(--line)}
+.add-saree-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}.add-saree-grid .full{grid-column:1/-1}.add-saree-grid label{display:block;font-size:9px;font-weight:900;color:#625356;margin-bottom:5px}.add-saree-grid .field{margin:0;height:42px}.add-help{font-size:9px;color:var(--muted);line-height:1.5;margin-top:8px}
+.all-ribbon-title{font:700 16px Georgia,serif;color:var(--deep);margin:17px 0 9px}.all-ribbon-list{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.all-ribbon-item{border:1px solid var(--line);border-radius:10px;padding:9px;background:#fffaf6;display:flex;align-items:center;justify-content:space-between;gap:8px}.all-ribbon-item b{font-size:10px}.all-ribbon-item span{font-size:8px;font-weight:900;color:var(--maroon);background:#f4eadb;border-radius:15px;padding:4px 7px}
+@media(max-width:700px){.add-saree-grid{grid-template-columns:1fr}.add-saree-grid .full{grid-column:auto}.all-ribbon-list{grid-template-columns:1fr}.admin-fold summary{padding:13px}.admin-fold-body{padding:9px}}
+
+/* Premium mobile admin cards */
+.booking-cards{display:grid;gap:8px}.booking-card{border:1px solid var(--line);background:#fff;border-radius:14px;padding:10px;display:flex;align-items:center;gap:9px;cursor:pointer;box-shadow:0 4px 14px #3b07170a}.booking-card:active{transform:scale(.99)}.booking-avatar{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--deep),var(--maroon));color:#ffe9a8;display:grid;place-items:center;font-weight:900}.booking-card-main{min-width:0;flex:1}.booking-card-main b{display:block;font-size:12px}.booking-card-main small{display:block;color:var(--muted);font-size:9px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.booking-card-side{text-align:right}.booking-card-side strong{display:block;font-size:12px;color:var(--maroon)}.status-pill{display:inline-flex;border-radius:20px;padding:3px 7px;font-size:8px;font-weight:900;margin-top:4px;background:#f2eee9}.status-pill.pending{color:#8b5a00;background:#fff2c9}.status-pill.confirmed{color:#176b3a;background:#e5f6eb}.status-pill.completed{color:#225f88;background:#e6f2fb}.status-pill.cancelled{color:#9a2638;background:#fde7eb}.booking-detail{margin-top:10px;border:1px solid #dfd1c0;border-radius:16px;background:#fffaf4;padding:12px;box-shadow:0 10px 28px #3b07171a}.booking-detail-head{display:flex;justify-content:space-between;align-items:center}.booking-detail-head h3{margin:3px 0 0;font:700 18px Georgia,serif;color:var(--deep)}.booking-detail-body{display:grid;gap:7px;margin-top:10px}.detail-row{display:flex;justify-content:space-between;gap:10px;padding:8px 9px;background:#fff;border:1px solid var(--line);border-radius:10px;font-size:10px}.detail-row span:first-child{color:var(--muted)}.detail-items{padding:9px;background:#fff;border:1px solid var(--line);border-radius:10px;font-size:10px;line-height:1.5}.detail-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.detail-actions select{flex:1;min-width:150px;height:36px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:0 8px}.detail-actions button{height:36px;border:0;border-radius:10px;padding:0 12px;font-weight:900}.combo-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.combo-actions .save{flex:1}.combo-delete{background:#fff0f2!important;color:#a3273c!important;border-color:#f0c5cd!important}.saved-combo-card{margin-top:9px;border:1px solid #decaa7;background:#fffaf0;border-radius:14px;padding:10px}.saved-combo-head{display:flex;justify-content:space-between;align-items:center;gap:8px}.saved-combo-head b{display:block;font-size:12px;color:var(--deep)}.combo-status{font-size:8px;font-weight:900;border-radius:20px;padding:4px 7px}.combo-status.on{background:#e4f6e9;color:#19713b}.combo-status.off{background:#eee;color:#777}.saved-combo-names{font-size:9px;color:#62585a;margin:7px 0}.saved-combo-price{display:flex;align-items:center;gap:8px;margin-bottom:8px}.saved-combo-price b{font-size:18px;color:var(--maroon)}.saved-combo-price span{font-size:9px;color:#8d8582;text-decoration:line-through}.ribbon-card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.ribbon-saree-card{border:1px solid var(--line);background:#fff;border-radius:13px;padding:8px;display:flex;align-items:center;gap:7px;text-align:left;min-width:0}.ribbon-saree-card:active{transform:scale(.98)}.ribbon-card-thumb{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#f6ead0,#e8c77e);color:var(--deep);display:grid;place-items:center;font-weight:900;flex:none}.ribbon-card-info{min-width:0;flex:1}.ribbon-card-info b{display:block;font-size:9px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ribbon-card-info small{display:block;font-size:7px;color:var(--gold);font-weight:800;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ribbon-card-arrow{font-size:18px;color:#9c8c84}.ribbon-editor{margin-top:9px;border:1px solid #decaa7;border-radius:14px;background:#fffaf4;padding:10px}.ribbon-editor-actions{display:flex;gap:6px;margin-top:8px}.ribbon-editor-actions .save{flex:1}.mini-ribbon-preview{margin-top:8px;border:1px dashed #dbcbbd;border-radius:10px;padding:9px;background:#fff;display:flex;align-items:center;gap:8px;font-size:10px}.mini-ribbon-preview .preview-ribbon{position:static}.@media(max-width:600px){.ribbon-card-grid{grid-template-columns:1fr}.combo-manager{grid-template-columns:1fr}.table-wrap{display:none}}
+</style>
+</head>
+<body>
+
+<div id="pinGate" class="pin-gate">
+  <div class="pin-page">
+    <div class="pin-header">
+      <img class="pin-logo" src="logo.jpeg" alt="Paramesh">
+      <div class="pin-brand">
+        <b>Paramesh Saree Prepleating</b>
+        <span>SECURE ADMIN ACCESS</span>
+      </div>
+    </div>
+
+    <p class="pin-intro">
+      By continuing, you confirm that you are an authorized user and that this secure area is being accessed only for legitimate Paramesh Saree Prepleating business and operational purposes.
+    </p>
+
+    <div class="pin-notice">
+      <p><b>IMPORTANT SECURITY NOTICE:</b> Do not share your security PIN, login credentials or account information with unauthorized persons.</p>
+      <p>Authorized users are responsible for keeping their access information confidential and for ensuring that it is not used by another person.</p>
+      <p>If you are not an authorized user, please leave this page immediately and do not attempt to continue.</p>
+      <p>Any unauthorized attempt to access, manipulate, copy, disclose or interfere with this system or its information is strictly prohibited.</p>
+    </div>
+
+    <div class="pin-note-line"><strong>Access requirement:</strong> You must enter the authorized security PIN below before the secure login area becomes available.</div>
+    <p class="pin-help">Please make sure that you are accessing this system only for legitimate Paramesh Saree Prepleating business and operational activities.</p>
+
+    <div class="pin-access">
+      <div class="pin-label">SECURITY PIN</div>
+      <div class="pin-row">
+        <input id="securityPin" class="pin-input" type="password" inputmode="numeric" maxlength="4" placeholder="Enter PIN" autocomplete="off" autocapitalize="none" spellcheck="false">
+        <button class="pin-check" type="button" onclick="unlockAdminLogin()" aria-label="Verify PIN">✓</button>
+      </div>
+      <div id="pinError" class="pin-error"></div>
+      <div class="pin-footer">Authorized access only. Your administrator PIN should be kept confidential.</div>
+    </div>
+  </div>
+</div>
+
+<div id="login" class="login">
+  <div class="login-box">
+    <img class="logo" src="logo.jpeg" alt="Paramesh">
+    <h1>Admin Panel</h1>
+    <p>Paramesh Saree Prepleating</p>
+    <input id="adminUser" class="field" value="" placeholder="Admin ID" autocomplete="off" autocapitalize="none" spellcheck="false">
+    <input id="adminPass" class="field" value="" type="password" placeholder="Password" autocomplete="new-password" autocapitalize="none" spellcheck="false">
+    <button class="login-btn" onclick="login()">LOGIN</button>
+    <div style="font-size:9px;color:#8b7b7e;margin-top:9px">Admin login is required every time this page is opened.</div>
+    <div id="loginError" class="error"></div>
+  </div>
+</div>
+
+<div id="admin" class="admin">
+<header class="top">
+  <div class="brand">
+    <img src="logo.jpeg" alt="Logo">
+    <div><b>Paramesh Admin</b><span>SAREE PREPLEATING</span></div>
+  </div>
+  <button class="logout" onclick="logout()">LOGOUT</button>
+</header>
+
+<nav class="tabs">
+  <button class="tab active" onclick="showSection('prices',this)">Saree Price Set</button>
+  <button class="tab" onclick="showSection('charges',this)">Prepleating Type</button>
+  <button class="tab" onclick="showSection('bookings',this)">Bookings</button>
+  <button class="tab" onclick="showSection('ribbons',this)">Ribbon Manager</button>
+  <button class="tab" onclick="showSection('combos',this)">Combo Offer</button>
+</nav>
+
+<div id="firebaseStatus" class="firebase-status connecting">● Firebase connecting...</div>
+<main class="wrap">
+<section id="prices" class="section active">
+  <h1 class="title">Saree Price Set</h1>
+  <p class="subtitle">Tap each panel to open the full price controls. Every saree is shown here, including sarees added later.</p>
+
+  <details class="admin-fold" open>
+    <summary><span>💰 Saree Price Set <small id="priceCount">0 sarees</small></span><b>OPEN</b></summary>
+    <div class="admin-fold-body">
+      <div class="saree-price-list" id="sareePriceList"></div>
+      <div id="priceEditor" class="price-editor" style="display:none">
+        <div class="editor-head"><div><span class="editor-kicker">CHANGE PRICE</span><div class="selected-saree" id="selectedSareeName">Select a saree</div></div><button class="close-editor" onclick="closePriceEditor()">×</button></div>
+        <div class="price-fields">
+          <div><label>Original Price</label><input id="editOriginal" type="number" min="0"></div>
+          <div><label>Offer Price</label><input id="editOffer" type="number" min="0"></div>
+        </div>
+        <button class="save price-save" onclick="saveSelectedPrice()">✓ SAVE / CHANGE PRICE</button>
+      </div>
+    </div>
+  </details>
+
+</section>
+
+<section id="charges" class="section">
+  <h1 class="title">Prepleating Type</h1>
+  <p class="subtitle">These charges appear automatically on the customer home page.</p>
+  <div class="charge-grid">
+    <div class="charge-card"><h3>Box Folding</h3><input id="boxFolding" type="number" min="0"></div>
+    <div class="charge-card"><h3>Buffer</h3><input id="buffer" type="number" min="0"></div>
+    <div class="charge-card"><h3>Hangover</h3><input id="hangover" type="number" min="0"></div>
+  </div>
+  <button class="save full-save" onclick="saveCharges()">SAVE PREPLEATING CHARGES</button>
+</section>
+
+<section id="bookings" class="section">
+  <h1 class="title">Bookings</h1>
+  <p class="subtitle">View and update customer booking status.</p>
+  <div id="bookingCards" class="booking-cards"></div>
+  <div id="bookingDetail" class="booking-detail" style="display:none">
+    <div class="booking-detail-head"><div><span class="editor-kicker">BOOKING DETAILS</span><h3 id="detailCustomer">Customer</h3></div><button class="close-editor" onclick="closeBookingDetail()">×</button></div>
+    <div id="detailBody" class="booking-detail-body"></div>
+    <div class="detail-actions" id="detailActions"></div>
+  </div>
+</section>
+
+<section id="combos" class="section">
+  <h1 class="title">Combo Offer</h1>
+  <p class="subtitle">Choose 2, 3 or 4 sarees and set one original combo rate and one special offer price. The offer appears on the customer home page.</p>
+  <div class="combo-manager">
+    <div class="combo-form">
+      <label>Combo Offer Title</label>
+      <input id="comboTitle" placeholder="2 Saree Combo Offer">
+      <label class="combo-toggle"><input id="comboEnabled" type="checkbox"> Show combo offer on customer page</label>
+      <label>Number of Sarees</label>
+      <select id="comboCount" onchange="renderComboSelects()">
+        <option value="2">2 Sarees</option><option value="3">3 Sarees</option><option value="4">4 Sarees</option>
+      </select>
+      <div id="comboSelects" class="combo-pair"></div>
+      <div class="price-fields">
+        <div><label>Original Combo Price</label><input id="comboOriginal" type="number" min="0"></div>
+        <div><label>Offer Combo Price</label><input id="comboOfferPrice" type="number" min="0"></div>
+      </div>
+      <div class="combo-actions">
+        <button class="save price-save" onclick="saveComboOffer()">✓ SAVE / CHANGE COMBO</button>
+        <button class="save combo-delete" onclick="deleteComboOffer()">✕ DELETE COMBO</button>
+      </div>
+    </div>
+    <div class="combo-preview">
+      <h3>Live Preview</h3>
+      <div class="combo-preview-box">
+        <div id="comboPreviewTitle" class="combo-preview-title">2 Saree Combo Offer</div>
+        <div id="comboPreviewNames" class="combo-preview-names">Select two sarees</div>
+        <div class="combo-preview-price"><span id="comboPreviewOffer" class="combo-preview-offer">₹0</span><span id="comboPreviewOriginal" class="combo-preview-original">₹0</span></div>
+      </div>
+      <div id="savedComboCard" class="saved-combo-card" style="display:none"></div>
+    </div>
+  </div>
+</section>
+
+<section id="ribbons" class="section">
+  <h1 class="title">Ribbon Manager</h1>
+  <p class="subtitle">Tap to open. All sarees are listed so you can quickly add, change or remove ribbons.</p>
+
+  <details class="admin-fold" open>
+    <summary><span>🎀 Ribbon Manager <small id="ribbonCount">0 sarees</small></span><b>OPEN</b></summary>
+    <div class="admin-fold-body">
+      <div class="all-ribbon-title">All Sarees · Tap a card to add or change ribbon</div>
+      <div id="allRibbonList" class="all-ribbon-list ribbon-card-grid"></div>
+      <div id="ribbonEditor" class="ribbon-editor" style="display:none">
+        <div class="editor-head"><div><span class="editor-kicker">RIBBON SETTINGS</span><div class="selected-saree" id="ribbonSelectedName">Select a saree</div></div><button class="close-editor" onclick="closeRibbonEditor()">×</button></div>
+        <input type="hidden" id="ribbonProduct">
+        <label>Ribbon Name</label>
+        <input id="ribbonText" placeholder="BEST / NEW / OFFER / FAST MOVING" oninput="updateRibbonPreview()">
+        <div class="ribbon-editor-actions"><button class="save" onclick="saveRibbon()">✓ SAVE / CHANGE</button><button class="save remove-ribbon" onclick="removeRibbon()">✕ REMOVE</button></div>
+        <div class="mini-ribbon-preview"><span id="previewRibbon" class="preview-ribbon" style="display:none">BEST</span><b id="previewName">Select a saree</b></div>
+      </div>
+    </div>
+  </details>
+</section>
+</main>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+const firebaseConfig={
+ apiKey:"AIzaSyCho5RF5pMpasT8nKz0IBgcX04NAv3ps40",
+ authDomain:"paramesh-saree-prepleati-d2726.firebaseapp.com",
+ databaseURL:"https://paramesh-saree-prepleati-d2726-default-rtdb.asia-southeast1.firebasedatabase.app",
+ projectId:"paramesh-saree-prepleati-d2726",
+ storageBucket:"paramesh-saree-prepleati-d2726.firebasestorage.app",
+ messagingSenderId:"88137039026",
+ appId:"1:88137039026:web:99f2f848b5ea5304209dab",
+ measurementId:"G-4RGS712SV3"
+};
+firebase.initializeApp(firebaseConfig);
+const db=firebase.database();
+const firebaseConnected=db.ref('.info/connected');
+firebaseConnected.on('value',snap=>{
+ const el=document.getElementById('firebaseStatus');
+ if(!el)return;
+ if(snap.val()===true){el.textContent='● Firebase connected';el.className='firebase-status ok';}
+ else{el.textContent='● Firebase offline';el.className='firebase-status bad';}
+});
+function firebaseError(err){
+ console.error('Firebase:',err);
+ toast(err&&err.message ? err.message : 'Firebase connection error');
+}
+
+
+/* Simple default admin login.
+   No Firebase Authentication is used. */
+const ADMIN_ID="paramesh@2211";
+const ADMIN_PASSWORD="2063";
+
+const seed=[
+{id:'silk-saree',name:'Silk Saree',originalPrice:350,offerPrice:300,badge:'FAST MOVING',ribbon:'BEST'},
+{id:'kanchipuram-silk-saree',name:'Kanchipuram Silk Saree',originalPrice:350,offerPrice:300,badge:'FAST MOVING',ribbon:''},
+{id:'arani-silk',name:'Arani Silk',originalPrice:350,offerPrice:300,badge:'FAST MOVING',ribbon:''},
+{id:'salem-silk',name:'Salem Silk',originalPrice:350,offerPrice:300,badge:'',ribbon:''},
+{id:'thanjavur-silk',name:'Thanjavur Silk',originalPrice:350,offerPrice:300,badge:'OFFER',ribbon:''},
+{id:'cotton-saree',name:'Cotton Saree',originalPrice:300,offerPrice:250,badge:'OFFER',ribbon:''},
+{id:'chettinad-cotton-saree',name:'Chettinad Cotton Saree',originalPrice:300,offerPrice:250,badge:'',ribbon:''},
+{id:'kalamkari-cotton-saree',name:'Kalamkari cotton Saree',originalPrice:300,offerPrice:250,badge:'',ribbon:''},
+{id:'space-silk-saree',name:'Space silk saree',originalPrice:250,offerPrice:200,badge:'',ribbon:''},
+{id:'crush-space-silk-saree',name:'Crush Space Silk saree',originalPrice:250,offerPrice:200,badge:'',ribbon:''},
+{id:'banaras-saree',name:'Banaras Saree',originalPrice:300,offerPrice:250,badge:'',ribbon:''}
+];
+let products=[...seed];
+
+function money(n){return "₹"+Number(n||0).toLocaleString("en-IN")}
+function toast(s){let t=document.getElementById("toast");t.textContent=s;t.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>t.classList.remove("show"),1800)}
+const SECURITY_PIN="6320";
+function unlockAdminLogin(){
+ const pin=document.getElementById("securityPin").value.trim();
+ const error=document.getElementById("pinError");
+ if(pin!==SECURITY_PIN){
+   error.textContent="";
+   return;
+ }
+ document.getElementById("pinGate").style.display="none";
+ document.getElementById("login").style.display="flex";
+ document.getElementById("securityPin").value="";
+ error.textContent="";
+ document.getElementById("adminUser").value="";
+ document.getElementById("adminPass").value="";
+ document.getElementById("adminUser").focus();
+}
+function login(){
+ const u=document.getElementById("adminUser").value.trim();
+ const p=document.getElementById("adminPass").value;
+ if(u===ADMIN_ID&&p===ADMIN_PASSWORD){
+   sessionStorage.setItem("paramesh_admin","1");
+   document.getElementById("login").style.display="none";
+   document.getElementById("admin").style.display="block";
+   loadAll();
+ }else document.getElementById("loginError").textContent="Wrong Admin ID or Password";
+}
+function logout(){
+ sessionStorage.removeItem("paramesh_admin");
+ document.getElementById("admin").style.display="none";
+ document.getElementById("login").style.display="flex";
+}
+function showSection(id,btn){
+ document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+ btn.classList.add("active");
+ if(id==="bookings")loadBookings();
+ if(id==="ribbons")renderRibbonSelect();
+  if(id==="combos")loadComboOffer();
+}
+function loadAll(){
+ db.ref('products').once('value').then(s=>{
+  const data=s.val();
+  if(data){
+   products=seed.map(x=>({...x,...(data[x.id]||{})}));
+   // Keep any extra products created later in the database.
+   Object.entries(data).forEach(([id,p])=>{if(!products.some(x=>x.id===id))products.push({id,...p});});
+  }else{
+   products=[...seed];
+   const seedObj={};seed.forEach(x=>seedObj[x.id]=x);
+   return db.ref('products').set(seedObj);
+  }
+  }).then(()=>{renderPrices();renderRibbonSelect();renderComboSelects();loadComboOffer();})
+ .catch(firebaseError);
+
+ db.ref('prepleating').once('value').then(s=>{
+   const d=s.val();
+   if(!d){
+     const defaults={boxFolding:100,buffer:100,hangover:200};
+     document.getElementById('boxFolding').value=defaults.boxFolding;
+     document.getElementById('buffer').value=defaults.buffer;
+     document.getElementById('hangover').value=defaults.hangover;
+     return db.ref('prepleating').set(defaults);
+   }
+   document.getElementById('boxFolding').value=Number(d.boxFolding??100);
+   document.getElementById('buffer').value=Number(d.buffer??100);
+   document.getElementById('hangover').value=Number(d.hangover??200);
+ }).catch(firebaseError);
+ loadBookings();
+}
+
+let selectedPriceId="";
+function renderPrices(){
+ const box=document.getElementById("sareePriceList");
+ if(!box)return;
+ const count=document.getElementById("priceCount");
+ if(count)count.textContent=products.length+" sarees";
+ box.innerHTML=products.map(p=>`<div class="saree-price-card" onclick="openPriceEditor('${p.id}')"><div class="sp-name">${esc(p.name)}</div><div class="sp-row"><span class="sp-offer">₹${Number(p.offerPrice||0)}</span><span class="sp-original">₹${Number(p.originalPrice||0)}</span></div><div class="sp-action">TAP TO CHANGE PRICE</div></div>`).join("");
+ if(selectedPriceId && !products.some(p=>p.id===selectedPriceId)) closePriceEditor();
+}
+function openPriceEditor(id){
+ selectedPriceId=id;
+ const p=products.find(x=>x.id===id);
+ if(!p)return;
+ document.getElementById("selectedSareeName").textContent=p.name;
+ document.getElementById("editOriginal").value=Number(p.originalPrice||0);
+ document.getElementById("editOffer").value=Number(p.offerPrice||0);
+ const ed=document.getElementById("priceEditor");
+ ed.style.display="block";
+ setTimeout(()=>ed.scrollIntoView({behavior:"smooth",block:"nearest"}),20);
+}
+function loadPriceEditor(){ if(selectedPriceId) openPriceEditor(selectedPriceId); }
+function closePriceEditor(){ selectedPriceId=""; document.getElementById("priceEditor").style.display="none"; }
+function saveSelectedPrice(){
+ const id=selectedPriceId;
+ if(!id)return;
+ const op=Number(document.getElementById("editOriginal").value||0);
+ const sp=Number(document.getElementById("editOffer").value||0);
+ if(sp>op){toast("Offer price cannot be higher");return;}
+ db.ref("products/"+id).update({originalPrice:op,offerPrice:sp}).then(()=>{
+   const p=products.find(x=>x.id===id);
+   if(p){p.originalPrice=op;p.offerPrice=sp;}
+   toast("Price changed successfully");
+ }).catch(firebaseError);
+}
+function slugify(value){
+ return String(value||"").toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,60);
+}
+function saveCharges(){
+ const d={
+  boxFolding:Number(document.getElementById("boxFolding").value||0),
+  buffer:Number(document.getElementById("buffer").value||0),
+  hangover:Number(document.getElementById("hangover").value||0)
+ };
+ db.ref("prepleating").set(d).then(()=>toast("Prepleating charges updated")).catch(firebaseError);
+}
+function renderComboSelects(){
+ const box=document.getElementById('comboSelects'); if(!box)return;
+ const count=Number(document.getElementById('comboCount').value||2);
+ const current=window.comboSelectedIds||[];
+ box.innerHTML=Array.from({length:count},(_,i)=>`<div><label>Saree ${i+1}</label><select class="combo-saree-select" onchange="updateComboPreview()">${products.map(p=>`<option value="${esc(p.id)}">${esc(p.name)}</option>`).join('')}</select></div>`).join('');
+ const sels=[...box.querySelectorAll('select')]; sels.forEach((sel,i)=>{ if(current[i] && products.some(p=>p.id===current[i])) sel.value=current[i]; });
+ updateComboPreview();
+}
+function getComboIds(){ return [...document.querySelectorAll('.combo-saree-select')].map(s=>s.value); }
+function updateComboPreview(){
+ const ids=getComboIds(); window.comboSelectedIds=ids;
+ const ps=ids.map(id=>products.find(p=>p.id===id)).filter(Boolean);
+ document.getElementById('comboPreviewTitle').textContent=document.getElementById('comboTitle').value.trim()||(ps.length+' Saree Combo Offer');
+ document.getElementById('comboPreviewNames').textContent=ps.map(p=>p.name).join(' + ')||'Select sarees';
+ document.getElementById('comboPreviewOffer').textContent=money(document.getElementById('comboOfferPrice').value||0);
+ document.getElementById('comboPreviewOriginal').textContent=money(document.getElementById('comboOriginal').value||0);
+}
+function loadComboOffer(){
+ db.ref('comboOffer').once('value').then(s=>{
+  const d=s.val()||{};
+  const ids=Array.isArray(d.sareeIds)?d.sareeIds:(d.saree1Id&&d.saree2Id?[d.saree1Id,d.saree2Id]:[]);
+  window.comboSelectedIds=ids;
+  document.getElementById('comboCount').value=String(Math.min(4,Math.max(2,ids.length||2)));
+  renderComboSelects();
+  document.getElementById('comboTitle').value=d.title||'Saree Combo Offer';
+  document.getElementById('comboOriginal').value=Number(d.originalPrice||0);
+  document.getElementById('comboOfferPrice').value=Number(d.offerPrice||0);
+  document.getElementById('comboEnabled').checked=d.enabled===true;
+  updateComboPreview();
+ }).catch(firebaseError);
+}
+function saveComboOffer(){
+ const sareeIds=getComboIds(), originalPrice=Number(document.getElementById('comboOriginal').value||0), offerPrice=Number(document.getElementById('comboOfferPrice').value||0);
+ const title=document.getElementById('comboTitle').value.trim()||`${sareeIds.length} Saree Combo Offer`, enabled=document.getElementById('comboEnabled').checked;
+ if(sareeIds.length<2 || sareeIds.length>4 || sareeIds.some((id,i)=>!id || sareeIds.indexOf(id)!==i)){toast('Choose 2 to 4 different sarees');return;}
+ if(offerPrice<=0){toast('Enter offer price');return;}
+ if(offerPrice>originalPrice){toast('Offer price cannot be higher');return;}
+ db.ref('comboOffer').set({id:'main',title,enabled,sareeIds,originalPrice,offerPrice,updatedAt:firebase.database.ServerValue.TIMESTAMP}).then(()=>{ renderSavedCombo({title,enabled,sareeIds,originalPrice,offerPrice}); toast(enabled?'Combo offer saved':'Combo offer saved and hidden'); }).catch(firebaseError);
+}
+
+function renderSavedCombo(d){
+ const box=document.getElementById('savedComboCard'); if(!box)return;
+ if(!d || !Array.isArray(d.sareeIds) || d.sareeIds.length<2){box.style.display='none';return;}
+ const names=d.sareeIds.map(id=>products.find(p=>p.id===id)?.name).filter(Boolean);
+ box.style.display='block';
+ box.innerHTML=`<div class="saved-combo-head"><div><span class="editor-kicker">ACTIVE COMBO</span><b>${esc(d.title||'Saree Combo Offer')}</b></div><span class="combo-status ${d.enabled?'on':'off'}">${d.enabled?'LIVE':'HIDDEN'}</span></div><div class="saved-combo-names">${names.map(esc).join(' · ')}</div><div class="saved-combo-price"><b>₹${Number(d.offerPrice||0)}</b><span>Original ₹${Number(d.originalPrice||0)}</span></div><button class="save" onclick="editSavedCombo()">✎ EDIT COMBO</button><button class="save combo-delete" onclick="deleteComboOffer()">✕ DELETE COMBO</button>`;
+}
+function editSavedCombo(){document.getElementById('combos').scrollIntoView({behavior:'smooth'});document.getElementById('comboTitle').focus();}
+function deleteComboOffer(){
+ if(!confirm('Delete this combo offer?'))return;
+ db.ref('comboOffer').remove().then(()=>{
+   document.getElementById('comboEnabled').checked=false;
+   document.getElementById('savedComboCard').style.display='none';
+   toast('Combo offer deleted');
+ }).catch(firebaseError);
+}
+
+function renderRibbonSelect(){
+ const box=document.getElementById("allRibbonList");
+ if(!box)return;
+ const count=document.getElementById("ribbonCount");
+ if(count)count.textContent=products.length+" sarees";
+ renderAllRibbonList();
+}
+function renderAllRibbonList(){
+ const box=document.getElementById("allRibbonList"); if(!box)return;
+ box.innerHTML=products.map(p=>{
+   const r=String(p.ribbon||'').trim();
+   return `<button class="ribbon-saree-card" onclick="openRibbonEditor('${esc(p.id)}')"><span class="ribbon-card-thumb">${esc((p.name||'S').slice(0,1).toUpperCase())}</span><span class="ribbon-card-info"><b>${esc(p.name)}</b><small>${r?('🎀 '+esc(r)):'＋ Add ribbon'}</small></span><span class="ribbon-card-arrow">›</span></button>`;
+ }).join('');
+}
+function openRibbonEditor(id){
+ const p=products.find(x=>x.id===id); if(!p)return;
+ document.getElementById('ribbonProduct').value=id;
+ document.getElementById('ribbonSelectedName').textContent=p.name;
+ document.getElementById('ribbonText').value=p.ribbon||'';
+ updateRibbonPreview();
+ const ed=document.getElementById('ribbonEditor'); ed.style.display='block';
+ setTimeout(()=>ed.scrollIntoView({behavior:'smooth',block:'nearest'}),20);
+}
+function closeRibbonEditor(){document.getElementById('ribbonEditor').style.display='none';}
+function loadRibbon(){ const id=document.getElementById('ribbonProduct')?.value; if(id){ const p=products.find(x=>x.id===id); document.getElementById('ribbonText').value=p?.ribbon||''; updateRibbonPreview(); }}
+function updateRibbonPreview(){
+ const id=document.getElementById('ribbonProduct')?.value, p=products.find(x=>x.id===id);
+ const r=(document.getElementById('ribbonText')?.value||'').trim();
+ const pr=document.getElementById('previewRibbon'); if(pr){pr.textContent=r||'RIBBON';pr.style.display=r?'inline-flex':'none';}
+ const pn=document.getElementById('previewName'); if(pn)pn.textContent=p?p.name:'Select a saree';
+}
+function saveRibbon(){
+ const id=document.getElementById('ribbonProduct').value, text=document.getElementById('ribbonText').value.trim();
+ if(!id)return;
+ db.ref('products/'+id+'/ribbon').set(text).then(()=>{const p=products.find(x=>x.id===id);if(p)p.ribbon=text;renderPrices();renderAllRibbonList();toast(text?'Ribbon saved':'Ribbon removed');}).catch(firebaseError);
+}
+function removeRibbon(){
+ const id=document.getElementById('ribbonProduct').value;if(!id)return;
+ db.ref('products/'+id+'/ribbon').remove().then(()=>{const p=products.find(x=>x.id===id);if(p)p.ribbon='';document.getElementById('ribbonText').value='';updateRibbonPreview();renderAllRibbonList();toast('Ribbon removed');}).catch(firebaseError);
+}
+function loadBookings(){
+ db.ref('bookings').on('value',snap=>{
+  const data=snap.val()||{};
+  const rows=Object.entries(data).map(([id,b])=>({id,...b})).sort((a,b)=>Number(b.createdAt||0)-Number(a.createdAt||0));
+  const box=document.getElementById('bookingCards'); if(!box)return;
+  if(!rows.length){box.innerHTML='<div class="empty">No bookings yet.</div>';return;}
+  box.innerHTML=rows.map(b=>{
+   const status=String(b.status||'Pending');
+   const cls=status.toLowerCase().replace(/\s+/g,'-');
+   const first=String(b.customerName||'C').trim().charAt(0).toUpperCase();
+   const saree=b.sareeName||((b.items||[]).map(x=>x.sareeName).join(', '))||'Saree booking';
+   return `<button class="booking-card" onclick="openBookingDetail('${b.id}')"><span class="booking-avatar">${esc(first)}</span><span class="booking-card-main"><b>${esc(b.customerName||'Customer')}</b><small>${esc(saree)} · ${esc(b.phone||'')}</small></span><span class="booking-card-side"><strong>₹${Number(b.total||0)}</strong><span class="status-pill ${cls}">${esc(status)}</span></span></button>`;
+  }).join('');
+  window.adminBookings=rows;
+ });
+}
+function openBookingDetail(id){
+ const b=(window.adminBookings||[]).find(x=>x.id===id); if(!b)return;
+ document.getElementById('detailCustomer').textContent=b.customerName||'Customer';
+ const items=Array.isArray(b.items)?b.items:[];
+ const combo=b.combo||null;
+ document.getElementById('detailBody').innerHTML=`
+  <div class="detail-row"><span>Phone</span><b>${esc(b.phone||'—')}</b></div>
+  <div class="detail-row"><span>Email</span><b>${esc(b.email||'Not provided')}</b></div>
+  <div class="detail-row"><span>Saree</span><b>${esc(b.sareeName||'—')}</b></div>
+  <div class="detail-row"><span>Prepleating</span><b>${esc(b.prepleatingType||'—')}</b></div>
+  <div class="detail-row"><span>Quantity</span><b>${Number(b.quantity||0)}</b></div>
+  <div class="detail-row"><span>Saree total</span><b>₹${Number(b.sareeTotal||0)}</b></div>
+  <div class="detail-row"><span>Prepleating total</span><b>₹${Number(b.prepleatingTotal||0)}</b></div>
+  <div class="detail-row"><span>Grand total</span><b>₹${Number(b.total||0)}</b></div>
+  <div class="detail-row"><span>Requested date</span><b>${esc(b.wantedDate||b.bookingDate||'—')}</b></div>
+  <div class="detail-row"><span>Location</span><b>${esc(b.location||'—')}</b></div>
+  ${b.latitude||b.longitude?`<div class="detail-row"><span>GPS</span><b>${esc((b.latitude||'')+' , '+(b.longitude||''))}</b></div>`:''}
+  <div class="detail-row"><span>Notes</span><b>${esc(b.notes||'None')}</b></div>
+  <div class="detail-row"><span>Courier</span><b>${esc(b.courierCharge||'To be confirmed')}</b></div>
+  ${combo?`<div class="detail-items"><b>Combo</b><br>${esc(combo.title||'Combo')} · ${Number(combo.count||0)} sarees · Offer ₹${Number(combo.offerPrice||0).toLocaleString('en-IN')}<br>${esc((combo.sareeNames||[]).join(', '))}</div>`:''}
+  ${items.length?`<div class="detail-items"><b>Items</b><br>${items.map(x=>`${esc(x.sareeName||'Saree')} × ${Number(x.quantity||1)} · ${esc(x.prepleatingType||'')} · Saree ₹${Number(x.sareeSubtotal||0)} · Pleating ₹${Number(x.prepleatingSubtotal||0)} · Total ₹${Number(x.lineTotal||0)}${x.ribbon?' · 🎀 '+esc(x.ribbon):''}`).join('<br>')}</div>`:''}`;
+ document.getElementById('detailActions').innerHTML=`<select id="detailStatus"><option>Pending</option><option>Confirmed</option><option>Completed</option><option>Cancelled</option></select><button onclick="saveBookingStatus('${id}')">SAVE STATUS</button>`;
+ document.getElementById('detailStatus').value=b.status||'Pending';
+ document.getElementById('bookingDetail').style.display='block';
+ setTimeout(()=>document.getElementById('bookingDetail').scrollIntoView({behavior:'smooth',block:'nearest'}),20);
+}
+function closeBookingDetail(){document.getElementById('bookingDetail').style.display='none';}
+function saveBookingStatus(id){const v=document.getElementById('detailStatus').value;db.ref('bookings/'+id+'/status').set(v).then(()=>{toast('Booking status updated');closeBookingDetail();}).catch(firebaseError);}
+
+function setStatus(id,status){
+ db.ref("bookings/"+id+"/status").set(status).then(()=>toast("Booking "+status));
+}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+
+// Always require the Admin ID and Password when admin.html is opened.
+// Nothing is autofilled and no login state is restored automatically.
+sessionStorage.removeItem("paramesh_admin");
+document.getElementById("login").style.display="none";
+document.getElementById("admin").style.display="none";
+document.getElementById("pinGate").style.display="flex";
+document.getElementById("adminUser").value="";
+document.getElementById("adminPass").value="";
+document.getElementById("securityPin").value="";
+document.getElementById("pinError").textContent="";
+document.getElementById("securityPin").focus();
+document.getElementById("securityPin").addEventListener("keydown",e=>{if(e.key==="Enter")unlockAdminLogin()});
+</script>
+</body>
+</html>

@@ -1,0 +1,3269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Paramesh Saree Prepleating</title>
+
+<script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-database-compat.js"></script>
+
+<style>
+
+:root{
+  --maroon:#5b1024;
+  --deep:#350914;
+  --gold:#c79a45;
+  --gold2:#ead08d;
+  --bg:#efede9;
+  --card:#fffdfa;
+  --border:#ddd5ce;
+  --text:#2d2225;
+  --muted:#756b68;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  padding-bottom:80px;
+  overflow-x:hidden;
+}
+
+button,
+input,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* =========================
+   TOP BAR
+========================= */
+
+.topbar{
+  height:60px;
+  background:linear-gradient(135deg,var(--deep),var(--maroon));
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:6px 14px;
+  position:sticky;
+  top:0;
+  z-index:100;
+  box-shadow:0 5px 20px #35091425;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  color:#fff;
+  text-decoration:none;
+}
+
+.logo{
+  width:43px;
+  height:43px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid var(--gold2);
+  background:#fff;
+}
+
+.brand b{
+  display:block;
+  font:700 17px Georgia,serif;
+}
+
+.brand span{
+  display:block;
+  font-size:8px;
+  letter-spacing:1.6px;
+  opacity:.82;
+}
+
+.top-actions{
+  display:flex;
+  gap:6px;
+}
+
+.top-btn{
+  border:1px solid #ffffff30;
+  background:#ffffff12;
+  color:#fff;
+  border-radius:20px;
+  padding:7px 10px;
+  font-size:10px;
+  font-weight:800;
+  transition:
+    transform .2s ease,
+    background .2s ease;
+}
+
+.top-btn:hover{
+  background:#ffffff20;
+  transform:translateY(-2px);
+}
+
+.top-btn:active{
+  transform:scale(.94);
+}
+
+.count{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:17px;
+  height:17px;
+  margin-left:3px;
+  border-radius:50%;
+  background:var(--gold2);
+  color:var(--deep);
+  font-size:9px;
+}
+
+/* =========================
+   BANNER
+========================= */
+
+.banner-wrap{
+  padding:8px 10px 5px;
+}
+
+.banner{
+  height:108px;
+  border-radius:17px;
+  overflow:hidden;
+  position:relative;
+  background:
+    linear-gradient(
+      120deg,
+      #350914,
+      #7b203c,
+      #5b1024,
+      #98324f
+    );
+  background-size:300% 300%;
+  animation:gradientMove 7s ease infinite;
+  box-shadow:0 7px 24px #5b102430;
+}
+
+.slide{
+  position:absolute;
+  inset:0;
+  display:none;
+  padding:15px 18px;
+  color:white;
+}
+
+.slide.active{
+  display:block;
+  animation:slideIn .5s ease;
+}
+
+.slide h2{
+  margin:0 0 4px;
+  font:700 22px Georgia,serif;
+}
+
+.slide p{
+  margin:0;
+  font-size:11px;
+  opacity:.9;
+}
+
+.circle{
+  position:absolute;
+  width:120px;
+  height:120px;
+  right:-25px;
+  top:-35px;
+  border:1px solid #ffffff28;
+  border-radius:50%;
+}
+
+@keyframes gradientMove{
+  0%,100%{
+    background-position:0 50%;
+  }
+
+  50%{
+    background-position:100% 50%;
+  }
+}
+
+@keyframes slideIn{
+  from{
+    opacity:0;
+    transform:translateX(25px);
+  }
+
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+/* =========================
+   COMBO OFFER STRIP + SECTION
+========================= */
+
+/* =========================
+   SEARCH
+========================= */
+
+.toolbar{
+  display:flex;
+  gap:7px;
+  padding:5px 10px;
+}
+
+.search{
+  flex:1;
+  height:37px;
+  min-width:0;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#fffdfa;
+  padding:0 12px;
+  outline:none;
+  font-size:12px;
+  transition:
+    border-color .2s,
+    box-shadow .2s;
+}
+
+.search:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px #c79a4515;
+}
+
+.sort{
+  height:37px;
+  border:1px solid var(--border);
+  background:#fffdfa;
+  border-radius:12px;
+  padding:0 8px;
+  font-size:10px;
+  outline:none;
+}
+
+/* =========================
+   PREPLEATING
+========================= */
+
+.type-wrap{
+  margin:4px 10px 8px;
+  padding:7px;
+  background:#e5e1dc;
+  border:1px solid #d6cec6;
+  border-radius:14px;
+  box-shadow:0 3px 12px #3509140d;
+  cursor:pointer;
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+.type-wrap:hover{
+  box-shadow:0 6px 18px #35091415;
+}
+
+.type-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:5px;
+}
+
+.type-title{
+  font-size:10px;
+  font-weight:900;
+  color:#55484b;
+}
+
+.type-link{
+  color:var(--maroon);
+  font-size:8px;
+  font-weight:900;
+  text-decoration:none;
+}
+
+.type-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:5px;
+}
+
+.type-btn{
+  min-width:0;
+  border:1px solid #d9d0c9;
+  background:#fffdfa;
+  color:#4e3e42;
+  border-radius:9px;
+  padding:6px 3px;
+  font-size:10px;
+  font-weight:900;
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease,
+    background .2s ease;
+}
+
+.type-btn:hover{
+  transform:translateY(-1px);
+}
+
+.type-btn:active{
+  transform:scale(.95);
+}
+
+.type-btn small{
+  display:block;
+  color:var(--gold);
+  font-size:8px;
+  margin-top:2px;
+}
+
+.type-btn.active{
+  background:
+    linear-gradient(
+      135deg,
+      var(--maroon),
+      #791b36
+    );
+  border-color:var(--maroon);
+  color:#fff;
+  box-shadow:0 4px 10px #5b10242b;
+}
+
+.type-btn.active small{
+  color:#ffe7a0;
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.title{
+  padding:4px 11px;
+}
+
+.title h1{
+  margin:0;
+  color:var(--deep);
+  font:700 22px Georgia,serif;
+}
+
+.title p{
+  margin:3px 0;
+  color:var(--muted);
+  font-size:9px;
+}
+
+/* =========================
+   PRODUCT GRID
+========================= */
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+  padding:6px 12px 22px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+  position:relative;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:0 5px 16px #35091410;
+
+  transform:translateY(0) scale(1);
+
+  transition:
+    transform .22s cubic-bezier(.2,.8,.2,1),
+    box-shadow .22s ease,
+    border-color .22s ease;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 13px 28px #3509141c;
+  border-color:#d2b477;
+}
+
+.card:active{
+  transform:
+    translateY(-1px)
+    scale(.975);
+  box-shadow:0 5px 15px #35091418;
+}
+
+/* image area */
+
+.card-img-wrap{
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(
+      145deg,
+      #f5eadc,
+      #dec9ad
+    );
+}
+
+.card-img{
+  width:100%;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  display:block;
+
+  transform:scale(1);
+
+  transition:
+    transform .45s cubic-bezier(.2,.8,.2,1),
+    filter .3s ease;
+}
+
+.card:hover .card-img{
+  transform:scale(1.055);
+}
+
+.card:active .card-img{
+  transform:scale(1.025);
+}
+
+.fallback{
+  display:none;
+  align-items:center;
+  justify-content:center;
+  aspect-ratio:1/1;
+  background:
+    linear-gradient(
+      145deg,
+      #f5eadc,
+      #dec9ad
+    );
+  color:#76542f;
+  font:700 18px Georgia,serif;
+  letter-spacing:2px;
+}
+
+/* heart */
+
+.heart{
+  position:absolute;
+  top:7px;
+  right:7px;
+  z-index:4;
+
+  width:29px;
+  height:29px;
+
+  border:1px solid #eee;
+  border-radius:50%;
+
+  background:#fff;
+
+  box-shadow:0 3px 10px #0002;
+
+  font-size:17px;
+  line-height:27px;
+
+  transition:
+    transform .2s ease,
+    background .2s ease,
+    color .2s ease;
+}
+
+.heart:hover{
+  transform:scale(1.12);
+}
+
+.heart:active{
+  transform:scale(.8);
+}
+
+.heart.liked{
+  animation:heartPop .35s ease;
+}
+
+@keyframes heartPop{
+  0%{
+    transform:scale(.75);
+  }
+
+  55%{
+    transform:scale(1.22);
+  }
+
+  100%{
+    transform:scale(1);
+  }
+}
+
+/* ribbon */
+
+.ribbon{
+  position:absolute;
+  z-index:5;
+  left:-27px;
+  top:9px;
+  width:100px;
+  transform:rotate(-45deg);
+  text-align:center;
+  background:
+    linear-gradient(
+      90deg,
+      #9c7130,
+      #d7b260
+    );
+  color:white;
+  padding:3px 0;
+  font-size:7px;
+  font-weight:900;
+}
+
+/* card body */
+
+.card-body{
+  padding:8px;
+}
+
+.name{
+  font:700 13px Georgia,serif;
+  line-height:1.15;
+  min-height:30px;
+}
+
+.price-row{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  margin-top:4px;
+}
+
+.old{
+  color:#a39999;
+  font-size:9px;
+  text-decoration:line-through;
+}
+
+.price{
+  color:var(--maroon);
+  font-size:16px;
+  font-weight:900;
+}
+
+.precharge{
+  color:var(--muted);
+  font-size:8px;
+  margin-top:3px;
+}
+
+/* ADD BUTTON */
+
+.add{
+  width:100%;
+  border:0;
+  border-radius:8px;
+  background:
+    linear-gradient(
+      135deg,
+      var(--maroon),
+      #791b36
+    );
+  color:white;
+  padding:8px 3px;
+  margin-top:7px;
+  font-size:10px;
+  font-weight:900;
+
+  transition:
+    transform .16s ease,
+    box-shadow .16s ease,
+    filter .16s ease;
+}
+
+.add:hover{
+  box-shadow:0 5px 12px #5b102440;
+  filter:brightness(1.06);
+}
+
+.add:active{
+  transform:scale(.94);
+  box-shadow:none;
+}
+
+/* card entrance */
+
+.card-enter{
+  animation:cardEnter .42s ease both;
+}
+
+@keyframes cardEnter{
+  from{
+    opacity:0;
+    transform:
+      translateY(15px)
+      scale(.97);
+  }
+
+  to{
+    opacity:1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+/* =========================
+   BOTTOM NAV
+========================= */
+
+.bottom-nav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+
+  height:68px;
+
+  z-index:200;
+
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+
+  background:rgba(255,253,249,.97);
+  backdrop-filter:blur(15px);
+
+  border-top:1px solid #d9d0c9;
+
+  box-shadow:
+    0 -7px 24px #35091418;
+}
+
+.nav-btn{
+  border:0;
+  background:transparent;
+  color:#75686a;
+
+  font-size:8px;
+  font-weight:900;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+
+  transition:
+    color .2s ease,
+    transform .18s ease;
+}
+
+.nav-btn b{
+  font-size:18px;
+  line-height:18px;
+}
+
+.nav-btn:hover{
+  color:var(--maroon);
+  transform:translateY(-2px);
+}
+
+.nav-btn:active{
+  transform:scale(.9);
+}
+
+.nav-btn.active{
+  color:var(--maroon);
+}
+
+.book-btn{
+  margin:-12px 4px 5px;
+
+  border-radius:17px;
+
+  border:3px solid var(--bg);
+
+  background:
+    linear-gradient(
+      145deg,
+      var(--maroon),
+      #791b36
+    );
+
+  color:#fff;
+
+  box-shadow:
+    0 5px 16px #5b10243d;
+}
+
+.book-btn:hover{
+  color:#fff;
+  transform:
+    translateY(-4px)
+    scale(1.02);
+}
+
+/* =========================
+   DRAWER
+========================= */
+
+.drawer-bg{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:300;
+  background:#0008;
+}
+
+.drawer{
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+
+  width:min(410px,92vw);
+
+  background:var(--card);
+
+  display:flex;
+  flex-direction:column;
+
+  animation:drawerIn .25s ease;
+}
+
+@keyframes drawerIn{
+  from{
+    transform:translateX(100%);
+  }
+
+  to{
+    transform:none;
+  }
+}
+
+.drawer-head{
+  height:60px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--deep),
+      var(--maroon)
+    );
+
+  color:white;
+}
+
+.drawer-head h2{
+  margin:0;
+  font:700 20px Georgia,serif;
+}
+
+.close{
+  border:0;
+  border-radius:50%;
+  width:31px;
+  height:31px;
+  background:#ffffff18;
+  color:white;
+  font-size:18px;
+}
+
+.drawer-body{
+  flex:1;
+  overflow:auto;
+  padding:10px;
+}
+
+.cart-item,
+.fav-item{
+  display:flex;
+  gap:8px;
+  padding:9px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.cart-item img,
+.fav-item img{
+  width:58px;
+  height:58px;
+  object-fit:cover;
+  border-radius:8px;
+  background:#eee;
+}
+
+.item-info{
+  flex:1;
+  min-width:0;
+}
+
+.item-name{
+  font-size:12px;
+  font-weight:900;
+}
+
+.item-meta{
+  color:var(--muted);
+  font-size:9px;
+  margin-top:3px;
+}
+
+.item-price{
+  color:var(--maroon);
+  font-weight:900;
+  font-size:12px;
+  margin-top:3px;
+}
+
+.qty{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  margin-top:5px;
+}
+
+.qty button{
+  width:23px;
+  height:23px;
+  border:1px solid var(--border);
+  background:white;
+  border-radius:6px;
+}
+
+.remove{
+  border:0!important;
+  background:none!important;
+  color:#a33!important;
+  width:auto!important;
+}
+
+.drawer-foot{
+  border-top:1px solid var(--border);
+  padding:11px;
+}
+
+.total{
+  display:flex;
+  justify-content:space-between;
+
+  font-size:17px;
+  font-weight:900;
+
+  margin-bottom:9px;
+}
+
+.checkout{
+  width:100%;
+  border:0;
+  border-radius:10px;
+  background:#168c4b;
+  color:white;
+  padding:11px;
+  font-weight:900;
+}
+
+.clear{
+  width:100%;
+  border:1px solid var(--border);
+  background:white;
+  border-radius:10px;
+  padding:8px;
+  margin-top:6px;
+  font-size:10px;
+}
+
+.empty{
+  grid-column:1/-1;
+  text-align:center;
+  padding:35px 10px;
+  color:#887b7d;
+  font-size:12px;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:83px;
+
+  transform:
+    translate(-50%,20px);
+
+  background:#291d20;
+  color:white;
+
+  padding:9px 13px;
+
+  border-radius:10px;
+
+  font-size:10px;
+
+  opacity:0;
+  pointer-events:none;
+
+  transition:.25s;
+
+  z-index:500;
+}
+
+.toast.show{
+  opacity:1;
+  transform:
+    translate(-50%,0);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
+
+  .topbar{
+    height:56px;
+    padding:5px 8px;
+  }
+
+  .logo{
+    width:39px;
+    height:39px;
+  }
+
+  .brand b{
+    font-size:14px;
+  }
+
+  .brand span{
+    font-size:7px;
+  }
+
+  .top-actions{
+    gap:4px;
+  }
+
+  .top-btn{
+    padding:6px 6px;
+    font-size:8px;
+  }
+
+  .count{
+    min-width:15px;
+    height:15px;
+    font-size:8px;
+  }
+
+  /* banner */
+
+  .banner-wrap{
+    padding:6px 7px 3px;
+  }
+
+  .banner{
+    height:101px;
+    border-radius:14px;
+  }
+
+  .slide{
+    padding:14px;
+  }
+
+  .slide h2{
+    font-size:20px;
+  }
+
+  .slide p{
+    font-size:9px;
+  }
+
+  /* search */
+
+  .toolbar{
+    padding:5px 7px;
+  }
+
+  .search,
+  .sort{
+    height:34px;
+  }
+
+  .search{
+    font-size:11px;
+  }
+
+  /* prepleating */
+
+  .type-wrap{
+    margin:3px 7px 6px;
+    padding:6px;
+  }
+
+  .type-title{
+    font-size:9px;
+  }
+
+  .type-link{
+    font-size:7px;
+  }
+
+  .type-row{
+    gap:5px;
+  }
+
+  .type-btn{
+    padding:6px 2px;
+    font-size:9px;
+  }
+
+  .type-btn small{
+    font-size:7px;
+  }
+
+  /* title */
+
+  .title{
+    padding:4px 8px;
+  }
+
+  .title h1{
+    font-size:19px;
+  }
+
+  .title p{
+    font-size:8px;
+  }
+
+  /* ==================================
+     MOBILE PRODUCT GRID
+     SMALL 2 COLUMN CARDS
+  ================================== */
+
+  .products{
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
+
+    column-gap:9px;
+    row-gap:13px;
+
+    padding:
+      5px 8px 18px;
+  }
+
+  .card{
+    width:100%;
+    min-width:0;
+
+    border-radius:11px;
+
+    box-shadow:
+      0 4px 13px #35091410;
+
+    transition:
+      transform .18s ease,
+      box-shadow .18s ease;
+  }
+
+  .card:hover{
+    transform:none;
+    box-shadow:
+      0 4px 13px #35091410;
+  }
+
+  .card:active{
+    transform:
+      scale(.955)
+      translateY(1px);
+
+    box-shadow:
+      0 3px 9px #35091418;
+  }
+
+  .card-img{
+    aspect-ratio:
+      1.05/1;
+
+    transition:
+      transform .3s ease;
+  }
+
+  .card:active .card-img{
+    transform:scale(1.035);
+  }
+
+  .fallback{
+    aspect-ratio:
+      1.05/1;
+
+    font-size:13px;
+  }
+
+  .card-body{
+    padding:6px;
+  }
+
+  .name{
+    font-size:10px;
+    line-height:1.15;
+    min-height:23px;
+  }
+
+  .price-row{
+    margin-top:3px;
+    gap:4px;
+  }
+
+  .old{
+    font-size:7px;
+  }
+
+  .price{
+    font-size:13px;
+  }
+
+  .precharge{
+    font-size:7px;
+    margin-top:2px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .add{
+    padding:6px 2px;
+    margin-top:5px;
+    border-radius:7px;
+    font-size:8px;
+  }
+
+  .heart{
+    width:24px;
+    height:24px;
+
+    top:5px;
+    right:5px;
+
+    font-size:14px;
+    line-height:22px;
+  }
+
+  .ribbon{
+    left:-29px;
+    top:7px;
+    width:88px;
+    padding:2px 0;
+    font-size:5.5px;
+  }
+
+  /* bottom */
+
+  .bottom-nav{
+    height:63px;
+  }
+
+  .nav-btn{
+    font-size:7px;
+  }
+
+  .nav-btn b{
+    font-size:16px;
+  }
+
+  .book-btn{
+    margin-top:-10px;
+  }
+
+  .toast{
+    bottom:75px;
+  }
+}
+
+/* VERY SMALL PHONES */
+
+@media(max-width:360px){
+
+  .products{
+    column-gap:7px;
+    row-gap:11px;
+    padding-left:6px;
+    padding-right:6px;
+  }
+
+  .card-body{
+    padding:5px;
+  }
+
+  .name{
+    font-size:9px;
+  }
+
+  .price{
+    font-size:12px;
+  }
+
+  .precharge{
+    font-size:6.5px;
+  }
+
+  .add{
+    font-size:7px;
+    padding:5px 2px;
+  }
+}
+
+
+/* =========================
+   PREMIUM COMBO OFFER
+========================= */
+.combo-section{
+  position:relative;
+  overflow:hidden;
+  scroll-margin-top:18px;
+  margin:24px auto 24px;
+  width:min(1180px,calc(100% - 24px));
+  padding:18px;
+  border:1px solid #d9bd83;
+  border-radius:24px;
+  background:
+    radial-gradient(circle at 90% 0%,#fff0bd 0,transparent 30%),
+    linear-gradient(135deg,#fffdf8,#f8eee0 55%,#fffaf0);
+  box-shadow:0 18px 45px #3b071719, inset 0 1px 0 #fff;
+}
+.combo-section:before,.combo-section:after{content:"";position:absolute;border-radius:50%;border:1px solid #c79a4530;pointer-events:none}
+.combo-section:before{width:230px;height:230px;right:-95px;top:-130px}
+.combo-section:after{width:150px;height:150px;left:-90px;bottom:-100px}
+.combo-section-head{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px}
+.combo-kicker{font-size:9px;letter-spacing:2px;color:#a1782e;font-weight:900}
+.combo-heading{font:700 clamp(20px,3vw,30px) Georgia,serif;color:#3b0717;margin-top:4px;line-height:1.05}
+.combo-subtitle{font-size:10px;color:#756b68;margin-top:5px}
+.combo-offer{font-size:9px;font-weight:900;letter-spacing:.8px;color:#5b1024;background:#f8eacb;border:1px solid #e4c783;padding:7px 11px;border-radius:999px;white-space:nowrap}
+.combo-card{position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) minmax(190px,1.25fr);gap:10px;align-items:stretch}
+.combo-saree{position:relative;min-width:0;background:#fff;border:1px solid #e7d8c2;border-radius:15px;overflow:hidden;box-shadow:0 7px 18px #3b07170d;transition:transform .22s ease,box-shadow .22s ease}
+.combo-saree:hover{transform:translateY(-4px);box-shadow:0 13px 28px #3b071715}
+.combo-saree img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#f2e6d5}
+.combo-saree-name{padding:8px 9px;font-size:10px;font-weight:900;line-height:1.2;min-height:34px;color:#302326}
+.combo-price{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-width:0;background:linear-gradient(145deg,#3b0717,#741c39 58%,#5b1024);color:#fff;border-radius:17px;padding:15px;box-shadow:0 10px 24px #5b102433}
+.combo-price .label{font-size:8px;letter-spacing:1.5px;opacity:.8;font-weight:900}
+.combo-price .was{font-size:12px;opacity:.6;text-decoration:line-through;margin-top:6px}
+.combo-price .now{font-size:31px;font-weight:900;color:#ffe7a0;margin:2px 0 4px;line-height:1}
+.combo-price small{font-size:8px;opacity:.88;line-height:1.4}
+.combo-price button{width:100%;margin-top:12px;border:1px solid #efd28b;background:linear-gradient(135deg,#fff8df,#f8e7b9);color:#4a0b1d;border-radius:10px;padding:10px 8px;font-size:10px;font-weight:900;letter-spacing:.5px;box-shadow:0 5px 14px #0002;transition:transform .18s ease,filter .18s ease}
+.combo-price button:hover{filter:brightness(1.05);transform:translateY(-2px)}
+.combo-price button:active{transform:scale(.96)}
+.combo-empty{display:none}
+@media(max-width:900px){
+ .combo-card{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .combo-price{grid-column:1/-1;min-height:145px}
+}
+@media(max-width:700px){
+ .combo-section{width:calc(100% - 14px);margin:14px 7px 18px;padding:10px;border-radius:16px}
+ .combo-section-head{gap:7px;margin-bottom:9px}
+ .combo-kicker{font-size:6.5px;letter-spacing:1.2px}
+ .combo-heading{font-size:17px}
+ .combo-subtitle{font-size:7px;margin-top:3px}
+ .combo-offer{font-size:6.5px;padding:5px 7px}
+ .combo-card{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+ .combo-saree{border-radius:10px}
+ .combo-saree-name{font-size:7.5px;padding:5px 6px;min-height:27px}
+ .combo-price{grid-column:1/-1;min-height:105px;border-radius:11px;padding:9px}
+ .combo-price .label{font-size:6.5px}
+ .combo-price .was{font-size:8px;margin-top:3px}
+ .combo-price .now{font-size:23px;margin:2px 0}
+ .combo-price small{font-size:6.5px}
+ .combo-price button{margin-top:7px;padding:7px 5px;font-size:7.5px;border-radius:8px}
+}
+@media(max-width:380px){
+ .combo-card{gap:5px}
+ .combo-heading{font-size:15px}
+ .combo-offer{font-size:6px;padding:4px 6px}
+ .combo-saree-name{font-size:7px}
+ .combo-price .now{font-size:20px}
+}
+
+
+/* =========================
+   APP DOWNLOAD POPUP
+========================= */
+.app-popup-overlay{
+  position:fixed;
+  inset:0;
+  z-index:10000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(35,5,15,.62);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  animation:appOverlayIn .28s ease both;
+}
+.app-popup{
+  position:relative;
+  width:min(470px,100%);
+  overflow:hidden;
+  border:1px solid rgba(199,154,69,.55);
+  border-radius:24px;
+  background:
+    radial-gradient(circle at 90% 0%,rgba(234,208,141,.24),transparent 34%),
+    linear-gradient(145deg,#fffdf8,#f8eee0);
+  box-shadow:
+    0 28px 75px rgba(35,5,15,.35),
+    0 0 0 1px rgba(255,255,255,.35) inset;
+  animation:appPopupIn .36s cubic-bezier(.2,.8,.2,1) both;
+}
+.app-popup::before{
+  content:"";
+  position:absolute;
+  width:210px;
+  height:210px;
+  right:-100px;
+  top:-110px;
+  border:1px solid rgba(199,154,69,.22);
+  border-radius:50%;
+  pointer-events:none;
+}
+.app-popup-head{
+  padding:22px 20px 12px;
+  text-align:center;
+}
+.app-popup-logo{
+  width:82px;
+  height:74px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid var(--gold2);
+  background:#fff;
+  box-shadow:0 8px 22px rgba(53,9,20,.18),0 0 0 6px rgba(199,154,69,.08);
+}
+.app-popup-kicker{
+  margin-top:12px;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:2px;
+  color:#a1782e;
+}
+.app-popup-title{
+  margin:6px 0 0;
+  color:var(--deep);
+  font:700 27px Georgia,serif;
+}
+.app-popup-sub{
+  margin:6px auto 0;
+  max-width:320px;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.55;
+}
+.app-popup-body{
+  padding:5px 20px 20px;
+  text-align:center;
+}
+.app-popup-note{
+  margin:0 auto 14px;
+  padding:10px 12px;
+  border-radius:12px;
+  background:#fff8ea;
+  border:1px solid #ead5ad;
+  color:#684d30;
+  font-size:10px;
+  line-height:1.5;
+}
+.app-download-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  min-height:48px;
+  border:1px solid #d7ae5d;
+  border-radius:13px;
+  background:linear-gradient(135deg,var(--maroon),#7a1b36);
+  color:#fff;
+  text-decoration:none;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:1px;
+  box-shadow:0 10px 22px rgba(91,16,36,.22);
+  transition:transform .18s ease,filter .18s ease;
+}
+.app-download-btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.app-download-btn::after{content:" →";font-size:16px;margin-left:6px}
+.app-download-btn:active{transform:scale(.97)}
+.app-popup-close{
+  position:absolute;
+  top:10px;
+  right:10px;
+  width:34px;
+  height:34px;
+  border:1px solid rgba(91,16,36,.14);
+  border-radius:50%;
+  background:rgba(255,255,255,.78);
+  color:var(--maroon);
+  font-size:21px;
+  line-height:1;
+  cursor:pointer;
+  z-index:2;
+  box-shadow:0 4px 12px rgba(53,9,20,.10);
+  transition:transform .18s ease,background .18s ease;
+}
+.app-popup-close:hover{transform:rotate(90deg);background:#fff}
+.app-popup-close:active{transform:scale(.9) rotate(90deg)}
+@keyframes appOverlayIn{from{opacity:0}to{opacity:1}}
+@keyframes appPopupIn{
+  from{opacity:0;transform:translateY(18px) scale(.96)}
+  to{opacity:1;transform:none}
+}
+@media(max-width:600px){
+  .app-popup-overlay{padding:12px}
+  .app-popup{width:min(300px,88vw);max-width:300px;border-radius:17px}
+  .app-popup::before{width:130px;height:130px;right:-68px;top:-68px}
+  .app-popup-head{padding:15px 14px 8px}
+  .app-popup-logo{width:56px;height:56px;border-width:2px;box-shadow:0 5px 14px rgba(53,9,20,.16),0 0 0 4px rgba(199,154,69,.07)}
+  .app-popup-kicker{font-size:6.5px;letter-spacing:1.3px;margin-top:8px}
+  .app-popup-title{font-size:18px;line-height:1.12;margin-top:5px}
+  .app-popup-sub{font-size:8.3px;max-width:250px;line-height:1.45;margin-top:4px}
+  .app-popup-body{padding:3px 14px 14px}
+  .app-popup-note{font-size:7.8px;padding:8px 8px;margin-bottom:9px;line-height:1.45;border-radius:9px}
+  .app-download-btn{min-height:38px;font-size:8px;border-radius:9px;letter-spacing:.7px}
+  .app-download-btn::after{font-size:12px;margin-left:4px}
+  .app-popup-close{width:27px;height:27px;font-size:17px;top:7px;right:7px}
+}
+
+@media(max-width:360px){
+  .app-popup{width:min(280px,86vw)}
+  .app-popup-head{padding:13px 12px 7px}
+  .app-popup-logo{width:50px;height:50px}
+  .app-popup-kicker{font-size:6px}
+  .app-popup-title{font-size:16px}
+  .app-popup-sub{font-size:7.5px}
+  .app-popup-body{padding:2px 12px 12px}
+  .app-popup-note{font-size:7.2px;padding:7px}
+  .app-download-btn{min-height:35px;font-size:7.5px}
+  .app-popup-close{width:25px;height:25px;font-size:16px}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- APP DOWNLOAD POPUP -->
+<div id="appPopupOverlay" class="app-popup-overlay" role="dialog" aria-modal="true" aria-labelledby="appPopupTitle">
+  <div class="app-popup">
+    <button class="app-popup-close" type="button" aria-label="Close download popup" onclick="closeAppPopup()">×</button>
+    <div class="app-popup-head">
+      <img src="logo.jpeg" class="app-popup-logo" alt="Paramesh Saree Prepleating">
+      <div class="app-popup-kicker">OFFICIAL MOBILE APP</div>
+      <h2 id="appPopupTitle" class="app-popup-title">Saree Prepleating App</h2>
+      <p class="app-popup-sub">
+        A faster mobile experience for saree selection, prepleating and easy booking.
+      </p>
+    </div>
+    <div class="app-popup-body">
+      <div class="app-popup-note">
+        Android App Available · Tap below to download the APK directly.
+      </div>
+      <a
+        class="app-download-btn"
+        href="https://drive.google.com/uc?export=download&id=1qmX2ppKjxBZnTPLTPVXrM6k26wrVi_vw"
+      >
+        ⬇ DOWNLOAD APP
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<!-- =========================
+     TOP BAR
+========================= -->
+
+<header class="topbar">
+
+  <a class="brand" href="index.html">
+
+    <img
+      src="logo.jpeg"
+      class="logo"
+      alt="Paramesh Logo"
+    >
+
+    <div>
+      <b>Paramesh</b>
+      <span>SAREE PREPLEATING</span>
+    </div>
+
+  </a>
+
+  <div class="top-actions">
+
+    <button
+      class="top-btn"
+      onclick="openDrawer('favorites')"
+    >
+      ♡ Favorites
+      <span
+        class="count"
+        id="favCount"
+      >0</span>
+    </button>
+
+    <button
+      class="top-btn"
+      onclick="openDrawer('cart')"
+    >
+      🛒 Cart
+      <span
+        class="count"
+        id="cartCount"
+      >0</span>
+    </button>
+
+  </div>
+
+</header>
+
+
+<!-- =========================
+     COMBO OFFER QUICK STRIP
+========================= -->
+
+<!-- =========================
+     PROMO BANNER
+========================= -->
+
+<section class="banner-wrap">
+
+  <div class="banner">
+
+    <div class="slide active">
+
+      <div class="circle"></div>
+
+      <h2>Perfect Pleats ✨</h2>
+
+      <p>
+        Premium saree prepleating,
+        ready to wear beautifully.
+      </p>
+
+    </div>
+
+
+    <div class="slide">
+
+      <div class="circle"></div>
+
+      <h2>Book With Ease</h2>
+
+      <p>
+        Select your saree, choose your
+        style and book easily.
+      </p>
+
+    </div>
+
+
+    <div class="slide">
+
+      <div class="circle"></div>
+
+      <h2>Elegant. Fast. Neat.</h2>
+
+      <p>
+        Perfect for weddings,
+        functions and special occasions.
+      </p>
+
+    </div>
+
+
+    <div class="slide">
+
+      <div class="circle"></div>
+
+      <h2>Premium Saree Care</h2>
+
+      <p>
+        Beautiful finishing with
+        careful prepleating.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     COMBO OFFER SECTION
+========================= -->
+<!-- =========================
+     SEARCH
+========================= -->
+
+<div class="toolbar">
+
+  <input
+    id="search"
+    class="search"
+    type="search"
+    placeholder="Search saree..."
+    oninput="render()"
+  >
+
+  <select
+    id="sort"
+    class="sort"
+    onchange="render()"
+  >
+
+    <option value="default">
+      Filter
+    </option>
+
+    <option value="low">
+      Rate Low → High
+    </option>
+
+    <option value="high">
+      Rate High → Low
+    </option>
+
+  </select>
+
+</div>
+
+
+<!-- =========================
+     PREPLEATING TYPE
+========================= -->
+
+<section
+  class="type-wrap"
+  onclick="openStyles(event)"
+>
+
+  <div class="type-head">
+
+    <div class="type-title">
+      Prepleating Type · Select your preferred style
+    </div>
+
+    <a
+      href="images.html"
+      class="type-link"
+    >
+      VIEW STYLES ›
+    </a>
+
+  </div>
+
+
+  <div class="type-row">
+
+    <button
+      class="type-btn active"
+      data-type="boxFolding"
+      onclick="setType('boxFolding',event)"
+    >
+      Box Folding 
+      <small id="boxLabel">
+        ₹0
+      </small>
+    </button>
+
+
+    <button
+      class="type-btn"
+      data-type="buffer"
+      onclick="setType('buffer',event)"
+    >
+      Semi Buffer
+      <small id="bufferLabel">
+        ₹100
+      </small>
+    </button>
+
+
+    <button
+      class="type-btn"
+      data-type="hangover"
+      onclick="setType('hangover',event)"
+    >
+      Hanger Folding
+      <small id="hangLabel">
+        ₹200
+      </small>
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     TITLE
+========================= -->
+
+<div class="title">
+
+  <h1>
+    Choose Your Saree
+  </h1>
+
+  <p>
+    Choose a saree type and add it to your book.
+  </p>
+
+</div>
+
+
+<!-- =========================
+     PRODUCTS
+========================= -->
+
+<main
+  id="products"
+  class="products"
+></main>
+
+
+<!-- =========================
+     BOTTOM NAV
+========================= -->
+
+
+<!-- =========================
+     COMBO OFFER · LAST SECTION
+========================= -->
+<section id="comboSection" class="combo-section" style="display:none">
+  <div class="combo-section-head">
+    <div><div class="combo-kicker">LIMITED COMBO OFFER</div><div id="comboHeading" class="combo-heading">2 Saree Combo</div></div>
+    <div class="combo-offer">SPECIAL PRICE</div>
+  </div>
+  <div id="comboCard" class="combo-card"></div>
+</section>
+
+<nav class="bottom-nav">
+
+  <button
+    class="nav-btn active"
+    onclick="
+      window.scrollTo({
+        top:0,
+        behavior:'smooth'
+      })
+    "
+  >
+    <b>⌂</b>
+    Home
+  </button>
+
+
+  <button
+    class="nav-btn"
+    onclick="openDrawer('cart')"
+  >
+    <b>🛒</b>
+    Cart
+  </button>
+
+
+  <button
+    class="nav-btn book-btn"
+    onclick="openBooking()"
+  >
+    <b>＋</b>
+    BOOK NOW
+  </button>
+
+
+  <button
+    class="nav-btn"
+    onclick="location.href='work.html'"
+  >
+    <b>◇</b>
+    How It Works
+  </button>
+
+
+  <button
+    class="nav-btn"
+    onclick="location.href='support.html'"
+  >
+    <b>◇</b>
+    Support
+  </button>
+
+</nav>
+
+
+<!-- =========================
+     DRAWER
+========================= -->
+
+<div
+  id="drawerBg"
+  class="drawer-bg"
+  onclick="closeDrawer(event)"
+>
+
+  <aside
+    class="drawer"
+    onclick="event.stopPropagation()"
+  >
+
+    <div class="drawer-head">
+
+      <h2 id="drawerTitle">
+        Cart
+      </h2>
+
+      <button
+        class="close"
+        onclick="closeDrawer()"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div
+      id="drawerBody"
+      class="drawer-body"
+    ></div>
+
+
+    <div
+      id="drawerFoot"
+      class="drawer-foot"
+    ></div>
+
+  </aside>
+
+</div>
+
+
+<div
+  id="toast"
+  class="toast"
+></div>
+
+
+<script>
+
+/* =========================
+   FIREBASE
+========================= */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCho5RF5pMpasT8nKz0IBgcX04NAv3ps40",
+  authDomain: "paramesh-saree-prepleati-d2726.firebaseapp.com",
+  projectId: "paramesh-saree-prepleati-d2726",
+  databaseURL: "https://paramesh-saree-prepleati-d2726-default-rtdb.asia-southeast1.firebasedatabase.app",
+  storageBucket: "paramesh-saree-prepleati-d2726.firebasestorage.app",
+  messagingSenderId: "88137039026",
+  appId: "1:88137039026:web:99f2f848b5ea5304209dab",
+  measurementId: "G-4RGS712SV3"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const db=firebase.database();
+
+
+/* =========================
+   PRODUCTS
+========================= */
+
+const seed=[
+
+  {
+    id:'silk-saree',
+    name:'Silk Saree',
+    originalPrice:350,
+    offerPrice:300,
+    badge:'FAST MOVING',
+    ribbon:'BEST'
+  },
+
+  {
+    id:'kanchipuram-silk-saree',
+    name:'Kanchipuram Silk Saree',
+    originalPrice:350,
+    offerPrice:300,
+    badge:'FAST MOVING',
+    ribbon:''
+  },
+
+  {
+    id:'arani-silk',
+    name:'Arani Silk',
+    originalPrice:350,
+    offerPrice:300,
+    badge:'FAST MOVING',
+    ribbon:''
+  },
+
+  {
+    id:'salem-silk',
+    name:'Salem Silk',
+    originalPrice:350,
+    offerPrice:300,
+    badge:'',
+    ribbon:''
+  },
+
+  {
+    id:'thanjavur-silk',
+    name:'Thanjavur Silk',
+    originalPrice:350,
+    offerPrice:300,
+    badge:'OFFER',
+    ribbon:''
+  },
+
+  {
+    id:'cotton-saree',
+    name:'Cotton Saree',
+    originalPrice:300,
+    offerPrice:250,
+    badge:'OFFER',
+    ribbon:''
+  },
+
+  {
+    id:'chettinad-cotton-saree',
+    name:'Chettinad Cotton Saree',
+    originalPrice:300,
+    offerPrice:250,
+    badge:'',
+    ribbon:''
+  },
+
+  {
+    id:'kalamkari-cotton-saree',
+    name:'Kalamkari cotton Saree',
+    originalPrice:300,
+    offerPrice:250,
+    badge:'',
+    ribbon:''
+  },
+
+  {
+    id:'space-silk-saree',
+    name:'Space silk saree',
+    originalPrice:250,
+    offerPrice:200,
+    badge:'',
+    ribbon:''
+  },
+
+  {
+    id:'crush-space-silk-saree',
+    name:'Crush Space Silk saree',
+    originalPrice:250,
+    offerPrice:200,
+    badge:'',
+    ribbon:''
+  },
+
+  {
+    id:'banaras-saree',
+    name:'Banaras Saree',
+    originalPrice:300,
+    offerPrice:250,
+    badge:'',
+    ribbon:''
+  }
+
+];
+
+
+let products=[...seed];
+
+
+let charges={
+
+  boxFolding:0,
+
+  buffer:100,
+
+  hangover:200
+
+};
+
+
+let comboOffer=null;
+
+function comboMoney(n){
+  return money(n);
+}
+
+function renderCombo(){
+  const section=document.getElementById('comboSection');
+  const card=document.getElementById('comboCard');
+  const heading=document.getElementById('comboHeading');
+  if(!section||!card||!heading)return;
+  if(!comboOffer || comboOffer.enabled===false || !Array.isArray(comboOffer.sareeIds) || comboOffer.sareeIds.length<2){
+    section.style.display='none';
+    return;
+  }
+  const selected=comboOffer.sareeIds.map(id=>products.find(p=>p.id===id)).filter(Boolean);
+  if(selected.length<2){section.style.display='none';return;}
+  const original=Number(comboOffer.originalPrice||0);
+  const offer=Number(comboOffer.offerPrice||0);
+  heading.textContent=comboOffer.title || (selected.length+' Saree Combo');
+  section.style.display='block';
+  card.innerHTML=selected.map(p=>`<div class="combo-saree"><img src="${imgPath(p.id)}" alt="${escapeHtml(p.name)}" onerror="this.style.opacity='.18'"><div class="combo-saree-name">${escapeHtml(p.name)}</div></div>`).join('')+`<div class="combo-price"><div class="label">COMBO SPECIAL PRICE</div>${original>offer?`<div class="was">${comboMoney(original)}</div>`:''}<div class="now">${comboMoney(offer)}</div><small>Includes ${selected.length} sarees<br>+ selected prepleating charges</small><button onclick="addComboToCart(event)">BOOK COMBO</button></div>`;
+}
+
+function addComboToCart(event){
+  if(event)event.stopPropagation();
+  if(!comboOffer || comboOffer.enabled===false)return;
+  if(!Array.isArray(comboOffer.sareeIds) || comboOffer.sareeIds.length<2 || comboOffer.sareeIds.length>4){
+    toast('Combo offer is not configured correctly');
+    return;
+  }
+  localStorage.setItem('paramesh_pending_combo',JSON.stringify({...comboOffer,type:selectedType,createdAt:Date.now()}));
+  location.href='booking.html';
+}
+
+let selectedType=
+  localStorage.getItem(
+    'paramesh_selected_prepleating'
+  ) ||
+  'boxFolding';
+
+
+let cart=
+  JSON.parse(
+    localStorage.getItem(
+      'paramesh_cart'
+    ) ||
+    '[]'
+  );
+
+
+let favorites=
+  JSON.parse(
+    localStorage.getItem(
+      'paramesh_favorites'
+    ) ||
+    '[]'
+  );
+
+
+/* =========================
+   HELPERS
+========================= */
+
+function money(n){
+
+  return '₹'+
+    Number(n||0)
+      .toLocaleString('en-IN');
+
+}
+
+
+function typeName(type){
+
+  return {
+
+    boxFolding:'Box Folding',
+
+    buffer:'Buffer',
+
+    hangover:'Hangover'
+
+  }[type] ||
+  'Box Folding';
+
+}
+
+
+function charge(type){
+
+  return Number(
+    charges[type] ||
+    0
+  );
+
+}
+
+
+function imgPath(id){
+
+  return id+
+    '.jpg';
+
+}
+
+function escapeHtml(value){
+
+  return String(
+    value ?? ''
+  ).replace(
+    /[&<>"']/g,
+    function(m){
+
+      return {
+
+        '&':'&amp;',
+
+        '<':'&lt;',
+
+        '>':'&gt;',
+
+        '"':'&quot;',
+
+        "'":'&#039;'
+
+      }[m];
+
+    }
+  );
+
+}
+
+
+/* =========================
+   PREPLEATING
+========================= */
+
+function setType(type,event){
+
+  if(event){
+    event.stopPropagation();
+  }
+
+  selectedType=type;
+
+  localStorage.setItem(
+    'paramesh_selected_prepleating',
+    type
+  );
+
+  document
+    .querySelectorAll('.type-btn')
+    .forEach(function(btn){
+
+      btn.classList.toggle(
+        'active',
+        btn.dataset.type===type
+      );
+
+    });
+
+  render();
+
+}
+
+
+function openStyles(event){
+
+  if(
+    event.target.closest('button') ||
+    event.target.closest('a')
+  ){
+    return;
+  }
+
+  location.href=
+    'images.html?type='+
+    encodeURIComponent(
+      selectedType
+    );
+
+}
+
+
+function updateChargeLabels(){
+
+  document.getElementById(
+    'boxLabel'
+  ).textContent=
+    money(
+      charges.boxFolding
+    );
+
+
+  document.getElementById(
+    'bufferLabel'
+  ).textContent=
+    money(
+      charges.buffer
+    );
+
+
+  document.getElementById(
+    'hangLabel'
+  ).textContent=
+    money(
+      charges.hangover
+    );
+
+}
+
+
+/* =========================
+   RENDER PRODUCTS
+========================= */
+
+function render(){
+
+  const search=
+    document.getElementById(
+      'search'
+    ).value
+    .trim()
+    .toLowerCase();
+
+
+  const sort=
+    document.getElementById(
+      'sort'
+    ).value;
+
+
+  let list=
+    products.filter(
+      function(product){
+
+        return product.name
+          .toLowerCase()
+          .includes(search);
+
+      }
+    );
+
+
+  if(sort==='low'){
+
+    list.sort(
+      (a,b)=>
+        Number(a.offerPrice)-
+        Number(b.offerPrice)
+    );
+
+  }
+
+
+  if(sort==='high'){
+
+    list.sort(
+      (a,b)=>
+        Number(b.offerPrice)-
+        Number(a.offerPrice)
+    );
+
+  }
+
+
+  const container=
+    document.getElementById(
+      'products'
+    );
+
+
+  if(!list.length){
+
+    container.innerHTML=
+      '<div class="empty">'+
+      'No saree found.'+
+      '</div>';
+
+    return;
+
+  }
+
+
+  container.innerHTML=
+    list.map(
+      function(product,index){
+
+        const favorite=
+          favorites.includes(
+            product.id
+          );
+
+
+        return `
+
+        <article
+          class="card card-enter"
+          style="animation-delay:${Math.min(index*35,300)}ms"
+        >
+
+          ${
+            product.ribbon
+            ?
+            `
+            <div class="ribbon">
+              ${escapeHtml(product.ribbon)}
+            </div>
+            `
+            :
+            ''
+          }
+
+
+          <button
+            class="heart ${favorite?'liked':''}"
+            onclick="
+              toggleFav(
+                '${product.id}',
+                event
+              )
+            "
+          >
+            ${favorite?'♥':'♡'}
+          </button>
+
+
+          <div class="card-img-wrap">
+
+            <img
+              class="card-img"
+              src="${imgPath(product.id)}"
+              alt="${escapeHtml(product.name)}"
+
+              onerror="
+                this.style.display='none';
+                this.parentElement.nextElementSibling.style.display='flex';
+              "
+            >
+
+          </div>
+
+
+          <div
+            class="fallback"
+          >
+            SAREE
+          </div>
+
+
+          <div class="card-body">
+
+            <div class="name">
+              ${escapeHtml(product.name)}
+            </div>
+
+
+            <div class="price-row">
+
+              ${
+                Number(product.originalPrice) >
+                Number(product.offerPrice)
+                ?
+                `
+                <span class="old">
+                  ${money(product.originalPrice)}
+                </span>
+                `
+                :
+                ''
+              }
+
+
+              <span class="price">
+                ${money(product.offerPrice)}
+              </span>
+
+            </div>
+
+
+            <div class="precharge">
+
+              ${escapeHtml(
+                typeName(selectedType)
+              )}
+
+              +
+
+              ${money(
+                charge(selectedType)
+              )}
+
+            </div>
+
+
+            <button
+              class="add"
+              onclick="
+                addToCart(
+                  '${product.id}',
+                  event
+                )
+              "
+            >
+              ADD TO CART
+            </button>
+
+          </div>
+
+        </article>
+
+        `;
+
+      }
+    ).join('');
+
+}
+
+
+/* =========================
+   LOCAL STORAGE
+========================= */
+
+function saveLocal(){
+
+  localStorage.setItem(
+    'paramesh_cart',
+    JSON.stringify(cart)
+  );
+
+
+  localStorage.setItem(
+    'paramesh_favorites',
+    JSON.stringify(favorites)
+  );
+
+
+  updateCounts();
+
+}
+
+
+/* =========================
+   CART
+========================= */
+
+function addToCart(id,event){
+
+  if(event){
+    event.stopPropagation();
+  }
+
+
+  const existing=
+    cart.find(
+      function(item){
+
+        return(
+          item.id===id &&
+          item.type===selectedType
+        );
+
+      }
+    );
+
+
+  if(existing){
+
+    existing.qty++;
+
+  }else{
+
+    cart.push({
+
+      id:id,
+
+      type:selectedType,
+
+      qty:1
+
+    });
+
+  }
+
+
+  saveLocal();
+
+  toast('Added to cart');
+
+}
+
+
+function changeQty(index,direction){
+
+  if(!cart[index]){
+    return;
+  }
+
+
+  cart[index].qty+=direction;
+
+
+  if(cart[index].qty<=0){
+
+    cart.splice(index,1);
+
+  }
+
+
+  saveLocal();
+
+  renderDrawer('cart');
+
+}
+
+
+function removeCart(index){
+
+  cart.splice(
+    index,
+    1
+  );
+
+  saveLocal();
+
+  renderDrawer('cart');
+
+}
+
+
+function clearCart(){
+
+  cart=[];
+
+  saveLocal();
+
+  renderDrawer('cart');
+
+}
+
+
+function cartTotal(){
+
+  return cart.reduce(
+    function(total,item){
+
+      const product=
+        products.find(
+          p=>p.id===item.id
+        );
+
+
+      if(!product){
+        return total;
+      }
+
+
+      const unit=
+        Number(product.offerPrice)+
+        charge(item.type);
+
+
+      return total+
+        unit*
+        Number(item.qty||0);
+
+    },
+    0
+  );
+
+}
+
+
+/* =========================
+   FAVORITES
+========================= */
+
+function toggleFav(id,event){
+
+  if(event){
+    event.stopPropagation();
+  }
+
+
+  if(
+    favorites.includes(id)
+  ){
+
+    favorites=
+      favorites.filter(
+        x=>x!==id
+      );
+
+  }else{
+
+    favorites.push(id);
+
+  }
+
+
+  saveLocal();
+
+  render();
+
+}
+
+
+/* =========================
+   COUNTS
+========================= */
+
+function updateCounts(){
+
+  document.getElementById(
+    'cartCount'
+  ).textContent=
+    cart.reduce(
+      (sum,item)=>
+        sum+
+        Number(item.qty||0),
+      0
+    );
+
+
+  document.getElementById(
+    'favCount'
+  ).textContent=
+    favorites.length;
+
+}
+
+
+/* =========================
+   DRAWER
+========================= */
+
+function openDrawer(which){
+
+  document.getElementById(
+    'drawerBg'
+  ).style.display='block';
+
+
+  document.getElementById(
+    'drawerTitle'
+  ).textContent=
+    which==='cart'
+    ?
+    'Cart'
+    :
+    'Favorites';
+
+
+  renderDrawer(which);
+
+}
+
+
+function closeDrawer(event){
+
+  if(
+    event &&
+    event.target!==
+    document.getElementById(
+      'drawerBg'
+    )
+  ){
+    return;
+  }
+
+
+  document.getElementById(
+    'drawerBg'
+  ).style.display='none';
+
+}
+
+
+function renderDrawer(which){
+
+  const body=
+    document.getElementById(
+      'drawerBody'
+    );
+
+
+  const foot=
+    document.getElementById(
+      'drawerFoot'
+    );
+
+
+  if(which==='cart'){
+
+    if(!cart.length){
+
+      body.innerHTML=
+        '<div class="empty">'+
+        'Your cart is empty.'+
+        '</div>';
+
+      foot.innerHTML='';
+
+      return;
+
+    }
+
+
+    body.innerHTML=
+      cart.map(
+        function(item,index){
+
+          const product=
+            products.find(
+              p=>p.id===item.id
+            );
+
+
+          if(!product){
+            return '';
+          }
+
+
+          const unit=
+            Number(product.offerPrice)+
+            charge(item.type);
+
+
+          return `
+
+          <div class="cart-item">
+
+            <img
+              src="${imgPath(product.id)}"
+              alt=""
+            >
+
+
+            <div class="item-info">
+
+              <div class="item-name">
+                ${escapeHtml(product.name)}
+              </div>
+
+
+              <div class="item-meta">
+                ${typeName(item.type)}
+                •
+                ${money(charge(item.type))}
+              </div>
+
+
+              <div class="item-price">
+                ${money(unit)} each
+              </div>
+
+
+              <div class="qty">
+
+                <button
+                  onclick="
+                    changeQty(${index},-1)
+                  "
+                >
+                  −
+                </button>
+
+
+                <b>
+                  ${item.qty}
+                </b>
+
+
+                <button
+                  onclick="
+                    changeQty(${index},1)
+                  "
+                >
+                  +
+                </button>
+
+
+                <button
+                  class="remove"
+                  onclick="
+                    removeCart(${index})
+                  "
+                >
+                  Remove
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          `;
+
+        }
+      ).join('');
+
+
+    foot.innerHTML=`
+
+      <div class="total">
+
+        <span>
+          Total
+        </span>
+
+        <span>
+          ${money(cartTotal())}
+        </span>
+
+      </div>
+
+
+      <button
+        class="checkout"
+        onclick="openBooking()"
+      >
+        BOOK NOW
+      </button>
+
+
+      <button
+        class="clear"
+        onclick="clearCart()"
+      >
+        Clear cart
+      </button>
+
+    `;
+
+  }else{
+
+    const list=
+      products.filter(
+        p=>
+          favorites.includes(
+            p.id
+          )
+      );
+
+
+    if(!list.length){
+
+      body.innerHTML=
+        '<div class="empty">'+
+        'No favorites saved yet.'+
+        '</div>';
+
+      foot.innerHTML='';
+
+      return;
+
+    }
+
+
+    body.innerHTML=
+      list.map(
+        function(product){
+
+          return `
+
+          <div class="fav-item">
+
+            <img
+              src="${imgPath(product.id)}"
+              alt=""
+            >
+
+
+            <div class="item-info">
+
+              <div class="item-name">
+                ${escapeHtml(product.name)}
+              </div>
+
+
+              <div class="item-price">
+                ${money(product.offerPrice)}
+              </div>
+
+
+              <div class="qty">
+
+                <button
+                  onclick="
+                    addToCart(
+                      '${product.id}'
+                    );
+                    renderDrawer(
+                      'favorites'
+                    );
+                  "
+                >
+                  Add
+                </button>
+
+
+                <button
+                  class="remove"
+                  onclick="
+                    toggleFav(
+                      '${product.id}'
+                    );
+                    renderDrawer(
+                      'favorites'
+                    );
+                  "
+                >
+                  Remove
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          `;
+
+        }
+      ).join('');
+
+
+    foot.innerHTML=`
+
+      <button
+        class="clear"
+        onclick="
+          favorites=[];
+          saveLocal();
+          render();
+          renderDrawer('favorites');
+        "
+      >
+        Clear favorites
+      </button>
+
+    `;
+
+  }
+
+}
+
+
+/* =========================
+   BOOKING
+========================= */
+
+function openBooking(){
+
+  if(localStorage.getItem('paramesh_pending_combo')){
+    location.href='booking.html';
+    return;
+  }
+
+  if(!cart.length){
+
+    toast(
+      'Add a saree first'
+    );
+
+    return;
+
+  }
+
+
+  location.href=
+    'booking.html';
+
+}
+
+
+/* =========================
+   SUPPORT
+========================= */
+
+function support(){
+
+  toast(
+    'Support contact will be available soon.'
+  );
+
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+let toastTimer;
+
+function toast(message){
+
+  const el=
+    document.getElementById(
+      'toast'
+    );
+
+
+  el.textContent=
+    message;
+
+
+  el.classList.add(
+    'show'
+  );
+
+
+  clearTimeout(
+    toastTimer
+  );
+
+
+  toastTimer=
+    setTimeout(
+      function(){
+
+        el.classList.remove(
+          'show'
+        );
+
+      },
+      1800
+    );
+
+}
+
+
+/* =========================
+   FIREBASE PRODUCTS
+========================= */
+
+db.ref('products').on(
+  'value',
+  function(snapshot){
+
+    const data=
+      snapshot.val();
+
+
+    if(data){
+
+      products=
+        Object.keys(data)
+          .map(
+            function(id){
+
+              const original=
+                seed.find(
+                  p=>p.id===id
+                ) ||
+                {};
+
+
+              return{
+
+                ...original,
+
+                ...data[id],
+
+                id:id
+
+              };
+
+            }
+          );
+
+
+      seed.forEach(
+        function(item){
+
+          if(
+            !products.some(
+              p=>p.id===item.id
+            )
+          ){
+
+            products.push(
+              item
+            );
+
+          }
+
+        }
+      );
+
+    }
+
+
+    render();
+
+  }
+);
+
+
+/* =========================
+   FIREBASE COMBO OFFER
+========================= */
+db.ref('comboOffer').on(
+  'value',
+  function(snapshot){
+    comboOffer=snapshot.val();
+    renderCombo();
+  }
+);
+
+/* =========================
+   FIREBASE PREPLEATING
+========================= */
+
+db.ref('prepleating').on(
+  'value',
+  function(snapshot){
+
+    const data=
+      snapshot.val();
+
+
+    if(data){
+
+      charges={
+
+        boxFolding:
+          Number(
+            data.boxFolding ??
+            0
+          ),
+
+        buffer:
+          Number(
+            data.buffer ??
+            100
+          ),
+
+        hangover:
+          Number(
+            data.hangover ??
+            200
+          )
+
+      };
+
+    }
+
+
+    updateChargeLabels();
+
+    render();
+
+  }
+);
+
+
+/* =========================
+   BANNER SLIDER
+========================= */
+
+let slideIndex=0;
+
+const slides=
+  document.querySelectorAll(
+    '.slide'
+  );
+
+
+setInterval(
+  function(){
+
+    slides[
+      slideIndex
+    ].classList.remove(
+      'active'
+    );
+
+
+    slideIndex=
+      (
+        slideIndex+1
+      )%
+      slides.length;
+
+
+    slides[
+      slideIndex
+    ].classList.add(
+      'active'
+    );
+
+  },
+  3000
+);
+
+
+/* =========================
+   START
+========================= */
+
+document
+  .querySelectorAll(
+    '.type-btn'
+  )
+  .forEach(
+    function(btn){
+
+      btn.classList.toggle(
+        'active',
+        btn.dataset.type===
+        selectedType
+      );
+
+    }
+  );
+
+
+updateCounts();
+
+updateChargeLabels();
+
+render();
+
+</script>
+
+
+<script>
+function closeAppPopup(){
+  const overlay=document.getElementById('appPopupOverlay');
+  if(overlay) overlay.remove();
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape') closeAppPopup();
+});
+</script>
+
+</body>
+</html>

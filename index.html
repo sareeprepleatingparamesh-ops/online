@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  >
+
+  <title>Paramesh Saree Prepleating</title>
+
+  <!-- Premium English + Tamil Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      min-height:100vh;
+      padding-bottom:40px;
+      overflow-x:hidden;
+
+      background:
+        radial-gradient(
+          circle at 20% 20%,
+          rgba(255,255,255,.95),
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at 80% 70%,
+          rgba(255,214,222,.55),
+          transparent 38%
+        ),
+        linear-gradient(
+          135deg,
+          #fffaf5 0%,
+          #f9e8e8 45%,
+          #fff7f0 100%
+        );
+
+      color:#4b1023;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+
+    /* =========================================
+       TOP NAVIGATION
+    ========================================= */
+
+    .top-nav{
+      position:relative;
+      z-index:20;
+
+      width:100%;
+      min-height:70px;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+
+      padding:10px 20px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #3a0718,
+          #64152b 55%,
+          #430a1d
+        );
+
+      border-bottom:1px solid rgba(225,190,108,.38);
+
+      box-shadow:
+        0 7px 25px rgba(58,7,24,.20);
+    }
+
+
+    /* BRAND */
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:11px;
+
+      text-decoration:none;
+      color:#fff;
+    }
+
+    .brand-logo{
+      width:48px;
+      height:48px;
+
+      border-radius:50%;
+
+      object-fit:cover;
+
+      border:2px solid #dfb967;
+
+      box-shadow:
+        0 0 0 3px rgba(255,255,255,.08),
+        0 5px 15px rgba(0,0,0,.25);
+    }
+
+    .brand-text{
+      display:flex;
+      flex-direction:column;
+
+      line-height:1.05;
+    }
+
+    .brand-name{
+      font-family:"Playfair Display", serif;
+
+      font-size:19px;
+      font-weight:700;
+
+      letter-spacing:.3px;
+
+      color:#fff8ed;
+    }
+
+    .brand-sub{
+      margin-top:4px;
+
+      font-size:9px;
+      font-weight:700;
+
+      letter-spacing:2px;
+
+      color:#e1bd6c;
+
+      text-transform:uppercase;
+    }
+
+
+    /* ADMIN */
+
+    .admin-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+
+      min-width:76px;
+      height:34px;
+
+      padding:0 14px;
+
+      border:1px solid rgba(226,191,106,.75);
+      border-radius:20px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,.09),
+          rgba(255,255,255,.03)
+        );
+
+      color:#f8e9c9;
+
+      font-size:10px;
+      font-weight:800;
+
+      letter-spacing:1.2px;
+
+      text-decoration:none;
+
+      transition:
+        transform .25s ease,
+        background .25s ease,
+        box-shadow .25s ease;
+    }
+
+    .admin-btn:hover{
+      transform:translateY(-2px);
+
+      background:
+        linear-gradient(
+          135deg,
+          #8a2744,
+          #63152e
+        );
+
+      box-shadow:
+        0 7px 18px rgba(0,0,0,.25);
+    }
+
+    .admin-btn:active{
+      transform:scale(.95);
+    }
+
+
+    /* =========================================
+       HERO
+    ========================================= */
+
+    .hero{
+      min-height:
+        calc(100vh - 110px);
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      padding:40px 20px 55px;
+
+      position:relative;
+
+      overflow:hidden;
+    }
+
+
+    /* Decorative background */
+
+    .hero::before{
+      content:"";
+
+      position:absolute;
+
+      width:360px;
+      height:360px;
+
+      border-radius:50%;
+
+      top:-150px;
+      left:-150px;
+
+      border:1px solid rgba(116,21,47,.10);
+
+      box-shadow:
+        0 0 0 30px rgba(116,21,47,.025),
+        0 0 0 65px rgba(116,21,47,.018);
+    }
+
+    .hero::after{
+      content:"";
+
+      position:absolute;
+
+      width:420px;
+      height:420px;
+
+      border-radius:50%;
+
+      right:-190px;
+      bottom:-220px;
+
+      border:1px solid rgba(183,137,53,.16);
+
+      box-shadow:
+        0 0 0 35px rgba(183,137,53,.025),
+        0 0 0 75px rgba(183,137,53,.018);
+    }
+
+
+    .hero-content{
+      width:100%;
+      max-width:850px;
+
+      text-align:center;
+
+      position:relative;
+      z-index:5;
+
+      animation:
+        heroAppear 1s cubic-bezier(.2,.7,.2,1) both;
+    }
+
+    @keyframes heroAppear{
+
+      from{
+        opacity:0;
+        transform:translateY(22px);
+      }
+
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+
+    }
+
+
+    /* =========================================
+       LOGO
+    ========================================= */
+
+    .logo-wrap{
+      position:relative;
+
+      width:180px;
+      height:180px;
+
+      margin:0 auto 25px;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .logo-ring{
+      position:absolute;
+
+      border-radius:50%;
+
+      pointer-events:none;
+    }
+
+    .ring-one{
+      width:174px;
+      height:174px;
+
+      border:1px solid rgba(116,21,47,.35);
+
+      animation:
+        ringRotate 18s linear infinite;
+    }
+
+    .ring-two{
+      width:153px;
+      height:153px;
+
+      border:1px dashed rgba(183,137,53,.60);
+
+      animation:
+        ringRotateReverse 22s linear infinite;
+    }
+
+    .ring-three{
+      width:138px;
+      height:138px;
+
+      border:1px solid rgba(116,21,47,.14);
+    }
+
+    @keyframes ringRotate{
+
+      from{
+        transform:rotate(0deg);
+      }
+
+      to{
+        transform:rotate(360deg);
+      }
+
+    }
+
+    @keyframes ringRotateReverse{
+
+      from{
+        transform:rotate(360deg);
+      }
+
+      to{
+        transform:rotate(0deg);
+      }
+
+    }
+
+    .hero-logo{
+      position:relative;
+      z-index:3;
+
+      width:120px;
+      height:120px;
+
+      border-radius:50%;
+
+      object-fit:cover;
+
+      border:4px solid #fffaf4;
+
+      box-shadow:
+        0 8px 30px rgba(75,16,35,.20),
+        0 0 0 2px #cda452;
+    }
+
+
+    /* =========================================
+       TITLE
+    ========================================= */
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+
+      gap:10px;
+
+      margin-bottom:9px;
+
+      color:#a27a32;
+
+      font-size:10px;
+      font-weight:800;
+
+      letter-spacing:3px;
+
+      text-transform:uppercase;
+    }
+
+    .eyebrow::before,
+    .eyebrow::after{
+      content:"";
+
+      width:28px;
+      height:1px;
+
+      background:#cda452;
+    }
+
+    .hero-title{
+      font-family:"Playfair Display", serif;
+
+      font-size:
+        clamp(30px,6vw,57px);
+
+      line-height:1.02;
+
+      font-weight:800;
+
+      letter-spacing:-1px;
+
+      color:#65152d;
+
+      text-shadow:
+        0 4px 18px rgba(101,21,45,.10);
+    }
+
+    .hero-title span{
+      display:block;
+
+      margin-top:7px;
+
+      font-family:Arial, Helvetica, sans-serif;
+
+      font-size:
+        clamp(16px,3vw,24px);
+
+      font-weight:800;
+
+      letter-spacing:
+        clamp(4px,1vw,8px);
+
+      color:#a47a31;
+    }
+
+
+    /* =========================================
+       ATTRACTIVE TAMIL TAGLINE
+    ========================================= */
+
+    .tamil-tagline{
+      position:relative;
+
+      margin:22px auto 0;
+
+      max-width:720px;
+
+      text-align:center;
+
+      font-family:
+        "Noto Serif Tamil",
+        serif;
+
+      animation:
+        tamilAppear 1.2s .35s ease both;
+    }
+
+    @keyframes tamilAppear{
+
+      from{
+        opacity:0;
+        transform:
+          translateY(14px)
+          scale(.97);
+      }
+
+      to{
+        opacity:1;
+        transform:
+          translateY(0)
+          scale(1);
+      }
+
+    }
+
+
+    /* First Tamil line */
+
+    .tamil-main{
+      position:relative;
+
+      display:block;
+
+      font-size:
+        clamp(17px,3.5vw,28px);
+
+      line-height:1.6;
+
+      font-weight:800;
+
+      letter-spacing:.2px;
+
+      color:#65152d;
+
+      text-shadow:
+        0 3px 12px rgba(101,21,45,.13);
+    }
+
+
+    /* Gold decorative lines */
+
+    .tamil-main::before,
+    .tamil-main::after{
+      content:"✦";
+
+      display:inline-block;
+
+      margin:0 9px;
+
+      color:#c99c47;
+
+      font-family:Arial, sans-serif;
+
+      font-size:13px;
+
+      vertical-align:middle;
+
+      animation:
+        starPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes starPulse{
+
+      0%,100%{
+        opacity:.5;
+        transform:scale(.8);
+      }
+
+      50%{
+        opacity:1;
+        transform:scale(1.15);
+      }
+
+    }
+
+
+    /* Second Tamil line */
+
+    .tamil-highlight{
+      display:inline-block;
+
+      position:relative;
+
+      margin-top:8px;
+
+      padding:
+        6px 18px 8px;
+
+      border-radius:30px;
+
+      font-family:
+        "Noto Serif Tamil",
+        serif;
+
+      font-size:
+        clamp(13px,2.5vw,20px);
+
+      line-height:1.5;
+
+      font-weight:800;
+
+      color:#fff8eb;
+
+      background:
+        linear-gradient(
+          135deg,
+          #64152c,
+          #8e2446,
+          #64152c
+        );
+
+      border:
+        1px solid rgba(222,186,102,.75);
+
+      box-shadow:
+        0 8px 24px rgba(101,21,45,.22),
+        inset 0 1px 0 rgba(255,255,255,.15);
+
+      animation:
+        highlightGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes highlightGlow{
+
+      0%,100%{
+        box-shadow:
+          0 8px 24px rgba(101,21,45,.20),
+          inset 0 1px 0 rgba(255,255,255,.15);
+      }
+
+      50%{
+        box-shadow:
+          0 10px 30px rgba(101,21,45,.32),
+          0 0 20px rgba(211,169,78,.18),
+          inset 0 1px 0 rgba(255,255,255,.18);
+      }
+
+    }
+
+
+    /* =========================================
+       DESCRIPTION
+    ========================================= */
+
+    .description{
+      max-width:650px;
+
+      margin:20px auto 0;
+
+      padding:0 10px;
+
+      font-size:
+        clamp(13px,2vw,16px);
+
+      line-height:1.7;
+
+      color:#6f5860;
+    }
+
+
+    /* =========================================
+       BOOK NOW BUTTON
+    ========================================= */
+
+    .book-btn{
+      position:relative;
+
+      display:inline-flex;
+
+      align-items:center;
+      justify-content:center;
+
+      min-width:190px;
+      height:52px;
+
+      margin-top:28px;
+
+      padding:0 30px;
+
+      border-radius:30px;
+
+      color:#fff9ef;
+
+      background:
+        linear-gradient(
+          135deg,
+          #65152d,
+          #8b2344 50%,
+          #65152d
+        );
+
+      border:1px solid #d7ae5d;
+
+      font-size:12px;
+
+      font-weight:900;
+
+      letter-spacing:2px;
+
+      text-decoration:none;
+
+      overflow:hidden;
+
+      box-shadow:
+        0 10px 28px rgba(101,21,45,.25);
+
+      transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+    }
+
+    .book-btn::before{
+      content:"";
+
+      position:absolute;
+
+      top:0;
+      left:-110%;
+
+      width:70%;
+      height:100%;
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(255,255,255,.23),
+          transparent
+        );
+
+      transform:skewX(-20deg);
+
+      transition:left .7s ease;
+    }
+
+    .book-btn:hover{
+
+      transform:translateY(-4px);
+
+      box-shadow:
+        0 15px 34px rgba(101,21,45,.32);
+    }
+
+    .book-btn:hover::before{
+      left:130%;
+    }
+
+    .book-btn:active{
+      transform:scale(.96);
+    }
+
+
+    /* =========================================
+       MINI TEXT
+    ========================================= */
+
+    .mini-note{
+      margin-top:15px;
+
+      font-size:9px;
+
+      font-weight:700;
+
+      letter-spacing:1.8px;
+
+      text-transform:uppercase;
+
+      color:#9a7a7e;
+    }
+
+
+    /* =========================================
+       DEVELOPER SUPPORT
+       ONLY ITEM IN BOTTOM BAR
+    ========================================= */
+
+    .developer-bottom{
+      position:fixed;
+
+      left:0;
+      right:0;
+      bottom:0;
+
+      z-index:1000;
+
+      min-height:36px;
+
+      display:flex;
+
+      align-items:center;
+      justify-content:center;
+
+      gap:12px;
+
+      padding:
+        5px 12px;
+
+      background:
+        rgba(55,8,25,.97);
+
+      border-top:
+        1px solid rgba(219,178,89,.40);
+
+      box-shadow:
+        0 -5px 20px rgba(0,0,0,.15);
+
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+
+      font-family:Arial, Helvetica, sans-serif;
+
+      font-size:9px;
+    }
+
+    .developer-label{
+      color:#dfba69;
+
+      font-weight:800;
+
+      letter-spacing:.7px;
+
+      white-space:nowrap;
+    }
+
+    .developer-email{
+      color:#f8eee2;
+
+      text-decoration:none;
+
+      white-space:nowrap;
+
+      transition:
+        color .25s ease;
+    }
+
+    .developer-email:hover{
+      color:#dfba69;
+    }
+
+    .portfolio-link{
+      display:inline-flex;
+
+      align-items:center;
+      justify-content:center;
+
+      min-height:22px;
+
+      padding:
+        2px 9px;
+
+      border-radius:15px;
+
+      color:#f9e9c9;
+
+      border:
+        1px solid rgba(222,186,102,.45);
+
+      text-decoration:none;
+
+      font-weight:800;
+
+      transition:.25s ease;
+    }
+
+    .portfolio-link:hover{
+      background:#74172f;
+
+      color:#fff;
+
+      border-color:#d8ae5d;
+    }
+
+
+    /* =========================================
+       TABLET
+    ========================================= */
+
+    @media(max-width:768px){
+
+      .top-nav{
+        min-height:64px;
+
+        padding:
+          8px 14px;
+      }
+
+      .brand-logo{
+        width:43px;
+        height:43px;
+      }
+
+      .brand-name{
+        font-size:16px;
+      }
+
+      .brand-sub{
+        font-size:8px;
+
+        letter-spacing:1.5px;
+      }
+
+      .admin-btn{
+        min-width:68px;
+
+        height:31px;
+
+        padding:0 11px;
+
+        font-size:9px;
+      }
+
+      .hero{
+        min-height:
+          calc(100vh - 106px);
+
+        padding:
+          30px 15px 45px;
+      }
+
+      .logo-wrap{
+        width:160px;
+        height:160px;
+
+        margin-bottom:20px;
+      }
+
+      .ring-one{
+        width:156px;
+        height:156px;
+      }
+
+      .ring-two{
+        width:137px;
+        height:137px;
+      }
+
+      .ring-three{
+        width:122px;
+        height:122px;
+      }
+
+      .hero-logo{
+        width:106px;
+        height:106px;
+      }
+
+      .description{
+        margin-top:17px;
+
+        line-height:1.6;
+      }
+
+      .book-btn{
+        min-width:175px;
+
+        height:48px;
+
+        margin-top:24px;
+      }
+    }
+
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media(max-width:600px){
+
+      body{
+        padding-bottom:36px;
+      }
+
+      .top-nav{
+        min-height:58px;
+
+        padding:
+          7px 10px;
+      }
+
+      .brand{
+        gap:8px;
+      }
+
+      .brand-logo{
+        width:39px;
+        height:39px;
+      }
+
+      .brand-name{
+        font-size:14px;
+      }
+
+      .brand-sub{
+        margin-top:3px;
+
+        font-size:7px;
+
+        letter-spacing:1.2px;
+      }
+
+      .admin-btn{
+        min-width:59px;
+
+        height:28px;
+
+        padding:0 9px;
+
+        font-size:8px;
+
+        letter-spacing:.9px;
+      }
+
+
+      .hero{
+        min-height:
+          calc(100vh - 94px);
+
+        padding:
+          25px 12px 35px;
+      }
+
+      .hero::before{
+        width:250px;
+        height:250px;
+
+        top:-120px;
+        left:-140px;
+      }
+
+      .hero::after{
+        width:280px;
+        height:280px;
+
+        right:-150px;
+        bottom:-160px;
+      }
+
+
+      /* Logo */
+
+      .logo-wrap{
+        width:135px;
+        height:135px;
+
+        margin-bottom:17px;
+      }
+
+      .ring-one{
+        width:133px;
+        height:133px;
+      }
+
+      .ring-two{
+        width:116px;
+        height:116px;
+      }
+
+      .ring-three{
+        width:103px;
+        height:103px;
+      }
+
+      .hero-logo{
+        width:91px;
+        height:91px;
+
+        border-width:3px;
+      }
+
+
+      /* Title */
+
+      .eyebrow{
+        gap:7px;
+
+        margin-bottom:7px;
+
+        font-size:7px;
+
+        letter-spacing:2px;
+      }
+
+      .eyebrow::before,
+      .eyebrow::after{
+        width:18px;
+      }
+
+      .hero-title{
+        font-size:
+          clamp(27px,9vw,38px);
+
+        letter-spacing:-.7px;
+      }
+
+      .hero-title span{
+        margin-top:5px;
+
+        font-size:13px;
+
+        letter-spacing:4px;
+      }
+
+
+      /* Tamil */
+
+      .tamil-tagline{
+        margin-top:17px;
+
+        padding:0 3px;
+      }
+
+      .tamil-main{
+        font-size:
+          clamp(15px,4.6vw,20px);
+
+        line-height:1.7;
+      }
+
+      .tamil-main::before,
+      .tamil-main::after{
+        margin:0 5px;
+
+        font-size:9px;
+      }
+
+      .tamil-highlight{
+        margin-top:5px;
+
+        padding:
+          4px 11px 5px;
+
+        font-size:
+          clamp(11px,3.5vw,15px);
+      }
+
+
+      /* Description */
+
+      .description{
+        margin-top:15px;
+
+        max-width:390px;
+
+        font-size:11.5px;
+
+        line-height:1.6;
+      }
+
+
+      /* Button */
+
+      .book-btn{
+        min-width:160px;
+
+        height:44px;
+
+        margin-top:21px;
+
+        padding:0 23px;
+
+        font-size:10px;
+
+        letter-spacing:1.7px;
+      }
+
+      .mini-note{
+        margin-top:11px;
+
+        font-size:7px;
+
+        letter-spacing:1.2px;
+      }
+
+
+      /* Developer bar */
+
+      .developer-bottom{
+        min-height:29px;
+
+        padding:
+          4px 6px;
+
+        gap:7px;
+
+        font-size:7.5px;
+      }
+
+      .developer-label{
+        font-size:7.5px;
+
+        letter-spacing:.3px;
+      }
+
+      .developer-email{
+        max-width:165px;
+
+        overflow:hidden;
+
+        text-overflow:ellipsis;
+      }
+
+      .portfolio-link{
+        min-height:20px;
+
+        padding:
+          2px 7px;
+
+        font-size:7.5px;
+      }
+    }
+
+
+    /* =========================================
+       SMALL PHONES
+    ========================================= */
+
+    @media(max-width:360px){
+
+      .brand-name{
+        font-size:13px;
+      }
+
+      .brand-sub{
+        font-size:6.5px;
+      }
+
+      .admin-btn{
+        min-width:55px;
+
+        font-size:7.5px;
+      }
+
+      .hero{
+        padding-top:20px;
+      }
+
+      .logo-wrap{
+        width:120px;
+        height:120px;
+      }
+
+      .ring-one{
+        width:118px;
+        height:118px;
+      }
+
+      .ring-two{
+        width:103px;
+        height:103px;
+      }
+
+      .ring-three{
+        width:92px;
+        height:92px;
+      }
+
+      .hero-logo{
+        width:82px;
+        height:82px;
+      }
+
+      .hero-title{
+        font-size:25px;
+      }
+
+      .hero-title span{
+        font-size:11px;
+
+        letter-spacing:3px;
+      }
+
+      .tamil-main{
+        font-size:14px;
+      }
+
+      .tamil-highlight{
+        font-size:10px;
+      }
+
+      .description{
+        font-size:10.5px;
+      }
+
+      .developer-bottom{
+        gap:5px;
+
+        font-size:6.8px;
+      }
+
+      .developer-label{
+        font-size:6.8px;
+      }
+
+      .developer-email{
+        max-width:140px;
+      }
+
+      .portfolio-link{
+        font-size:6.8px;
+
+        padding:
+          2px 6px;
+      }
+    }
+
+
+    /* =========================================
+       REDUCED MOTION
+    ========================================= */
+
+    @media(prefers-reduced-motion:reduce){
+
+      *,
+      *::before,
+      *::after{
+        animation-duration:.01ms !important;
+
+        animation-iteration-count:1 !important;
+
+        scroll-behavior:auto !important;
+
+        transition-duration:.01ms !important;
+      }
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- ========================================
+       TOP NAVBAR
+  ========================================= -->
+
+  <header class="top-nav">
+
+    <a
+      href="index.html"
+      class="brand"
+    >
+
+      <img
+        src="logo.jpeg"
+        alt="Paramesh Saree Prepleating Logo"
+        class="brand-logo"
+      >
+
+      <div class="brand-text">
+
+        <div class="brand-name">
+          Paramesh
+        </div>
+
+        <div class="brand-sub">
+          Saree Prepleating
+        </div>
+
+      </div>
+
+    </a>
+
+
+
+  </header>
+
+
+
+  <!-- ========================================
+       MAIN HERO
+  ========================================= -->
+
+  <main class="hero">
+
+    <section class="hero-content">
+
+
+      <!-- Logo with animated rings -->
+
+      <div class="logo-wrap">
+
+        <div class="logo-ring ring-one"></div>
+
+        <div class="logo-ring ring-two"></div>
+
+        <div class="logo-ring ring-three"></div>
+
+        <img
+          src="logo.jpeg"
+          alt="Paramesh Saree"
+          class="hero-logo"
+        >
+
+      </div>
+
+
+
+      <!-- English -->
+
+      <div class="eyebrow">
+        Premium Saree Service
+      </div>
+
+
+      <h1 class="hero-title">
+
+        Paramesh Saree
+
+        <span>
+          PREPLEATING
+        </span>
+
+      </h1>
+
+
+
+      <!-- ====================================
+           ONLY TAMIL TEXT
+      ===================================== -->
+
+      <div class="tamil-tagline">
+
+        <span class="tamil-main">
+          மடிப்பு கலைந்தா இனி கவலை இல்லை!
+        </span>
+
+        <strong class="tamil-highlight">
+          Perfect Prepleatingக்கு நாங்க Ready!
+        </strong>
+
+      </div>
+
+
+
+      <!-- English description -->
+
+      <p class="description">
+
+        Premium saree prepleating with neat finishing
+        and perfect pleats. Get your saree ready to
+        wear beautifully and confidently.
+
+      </p>
+
+
+
+      <!-- BOOK NOW -->
+
+      <a
+        href="home.html"
+        class="book-btn"
+      >
+        BOOK NOW
+      </a>
+
+
+
+      <div class="mini-note">
+        Perfect Pleats • Premium Finish • Easy Booking
+      </div>
+
+
+    </section>
+
+  </main>
+
+
+
+  <!-- ========================================
+       BOTTOM BAR
+       ONLY DEVELOPER SUPPORT
+  ========================================= -->
+
+  <div class="developer-bottom">
+
+    <span class="developer-label">
+      Developer Support
+    </span>
+
+
+    <a
+      href="mailto:muthukrishnan11028@gmail.com"
+      class="developer-email"
+    >
+      muthukrishnan11028@gmail.com
+    </a>
+
+
+    <a
+      href="https://muthukrishnanj-portfolio.vercel.app/"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="portfolio-link"
+    >
+      Portfolio ↗
+    </a>
+
+  </div>
+
+
+</body>
+</html>
