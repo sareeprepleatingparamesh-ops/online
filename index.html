@@ -8,34 +8,65 @@
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
   >
 
-  <title>Paramesh Saree Prepleating | All Over Tamil Nadu</title>
-
-  <meta
-    name="description"
-    content="Paramesh Saree Prepleating offers premium saree prepleating with neat finishing and easy booking all over Tamil Nadu. Choose your saree, select your prepleating style and book online."
-  >
-
-  <meta
-    name="keywords"
-    content="Paramesh Saree Prepleating, saree prepleating, saree pleating, prepleated saree, saree prepleating Tamil Nadu, saree prepleating all over Tamil Nadu"
-  >
-
+  
+  <!-- =========================
+       SEO + GOOGLE SEARCH
+       Keep logo.jpeg in the same
+       deployed root as index.html
+  ========================== -->
+  <meta name="description" content="Paramesh Saree Prepleating — premium saree prepleating with neat finishing and perfect pleats. Get your saree ready to wear beautifully and confidently.">
+  <meta name="keywords" content="saree prepleating, saree pleating, saree prepleating service, Paramesh Saree Prepleating">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="googlebot" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#65152d">
   <meta name="application-name" content="Paramesh Saree Prepleating">
-  <meta name="apple-mobile-web-app-title" content="Paramesh Saree Prepleating">
 
-  <!-- Google / Browser favicon -->
-  <link rel="icon" type="image/jpeg" href="logo.jpeg">
-  <link rel="apple-touch-icon" href="logo.jpeg">
+  <!-- Favicon / Google Search favicon -->
+  <link rel="icon" href="/logo.jpeg" type="image/jpeg">
+  <link rel="shortcut icon" href="/logo.jpeg" type="image/jpeg">
+  <link rel="apple-touch-icon" href="/logo.jpeg">
+
+  <!-- Canonical page URL -->
+  <link rel="canonical" href="https://sareeprepleating.vercel.app/">
 
   <!-- Social preview -->
-  <meta property="og:title" content="Paramesh Saree Prepleating | All Over Tamil Nadu">
-  <meta property="og:description" content="Premium saree prepleating with neat finishing and easy booking all over Tamil Nadu.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="logo.jpeg">
+  <meta property="og:site_name" content="Paramesh Saree Prepleating">
+  <meta property="og:title" content="Paramesh Saree Prepleating">
+  <meta property="og:description" content="Premium saree prepleating with neat finishing and perfect pleats.">
+  <meta property="og:url" content="https://sareeprepleating.vercel.app/">
+  <meta property="og:image" content="https://sareeprepleating.vercel.app/logo.jpeg">
+  <meta property="og:image:alt" content="Paramesh Saree Prepleating logo">
+
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Paramesh Saree Prepleating | All Over Tamil Nadu">
-  <meta name="twitter:description" content="Premium saree prepleating with neat finishing and easy booking all over Tamil Nadu.">
-  <meta name="twitter:image" content="logo.jpeg">
+  <meta name="twitter:title" content="Paramesh Saree Prepleating">
+  <meta name="twitter:description" content="Premium saree prepleating with neat finishing and perfect pleats.">
+  <meta name="twitter:image" content="https://sareeprepleating.vercel.app/logo.jpeg">
+
+  <!-- Google understands the business name and logo from this structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Paramesh Saree Prepleating",
+    "url": "https://sareeprepleating.vercel.app/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://sareeprepleating.vercel.app/logo.jpeg"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Paramesh Saree Prepleating",
+    "url": "https://sareeprepleating.vercel.app/"
+  }
+  </script>
+
+  <title>Paramesh Saree Prepleating | Premium Saree Prepleating</title>
 
   <!-- Premium English + Tamil Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,7 +91,7 @@
 
     body{
       min-height:100vh;
-      padding-bottom:40px;
+      padding-bottom:68px;
       overflow-x:hidden;
 
       background:
@@ -783,106 +814,111 @@
 
 
     /* =========================================
-       DEVELOPER SUPPORT
-       ONLY ITEM IN BOTTOM BAR
-    ========================================= */
+       PROFESSIONAL DEVELOPER SUPPORT BAR
+       ========================================= */
 
     .developer-bottom{
       position:fixed;
-
       left:0;
       right:0;
       bottom:0;
-
       z-index:1000;
+      padding:8px 12px 9px;
+      background:linear-gradient(135deg,rgba(42,5,18,.99),rgba(82,13,36,.98),rgba(54,7,24,.99));
+      border-top:1px solid rgba(225,190,108,.48);
+      box-shadow:0 -9px 28px rgba(45,5,20,.18),inset 0 1px 0 rgba(255,255,255,.05);
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      font-family:Arial,Helvetica,sans-serif;
+    }
 
-      min-height:36px;
-
+    .support-inner{
+      width:min(100%,900px);
+      margin:0 auto;
       display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:6px;
+    }
 
+    .support-brand{
+      display:inline-flex;
       align-items:center;
       justify-content:center;
+      gap:7px;
+      color:#fff7ea;
+      font-size:9px;
+      font-weight:900;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      line-height:1;
+    }
 
-      gap:12px;
-
-      padding:
-        5px 12px;
-
-      background:
-        rgba(55,8,25,.97);
-
-      border-top:
-        1px solid rgba(219,178,89,.40);
-
-      box-shadow:
-        0 -5px 20px rgba(0,0,0,.15);
-
-      backdrop-filter:blur(12px);
-      -webkit-backdrop-filter:blur(12px);
-
-      font-family:Arial, Helvetica, sans-serif;
-
+    .support-brand-icon{
+      width:20px;
+      height:20px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:50%;
+      color:#dfba69;
+      border:1px solid rgba(222,186,102,.55);
+      background:rgba(255,255,255,.055);
       font-size:9px;
     }
 
-    .developer-label{
-      color:#dfba69;
-
-      font-weight:800;
-
-      letter-spacing:.7px;
-
-      white-space:nowrap;
+    .support-actions{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:7px;
+      flex-wrap:wrap;
     }
 
-    .developer-email{
-      color:#f8eee2;
-
+    .support-link{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:5px;
+      min-height:26px;
+      padding:5px 12px;
+      border-radius:18px;
+      color:#fff8ed;
+      background:rgba(255,255,255,.055);
+      border:1px solid rgba(222,186,102,.35);
       text-decoration:none;
-
+      font-size:8.5px;
+      font-weight:800;
+      letter-spacing:.25px;
       white-space:nowrap;
-
-      transition:
-        color .25s ease;
+      transition:transform .2s ease,background .2s ease,border-color .2s ease,box-shadow .2s ease;
     }
 
-    .developer-email:hover{
-      color:#dfba69;
+    .support-link:hover{
+      transform:translateY(-1px);
+      background:#74172f;
+      border-color:#dfb967;
+      box-shadow:0 6px 16px rgba(0,0,0,.18);
+    }
+
+    .email-button{
+      border-color:rgba(223,185,103,.62);
+      background:rgba(223,185,103,.08);
     }
 
     .portfolio-link{
-      display:inline-flex;
-
-      align-items:center;
-      justify-content:center;
-
-      min-height:22px;
-
-      padding:
-        2px 9px;
-
-      border-radius:15px;
-
-      color:#f9e9c9;
-
-      border:
-        1px solid rgba(222,186,102,.45);
-
-      text-decoration:none;
-
-      font-weight:800;
-
-      transition:.25s ease;
+      border-color:rgba(255,255,255,.28);
     }
 
-    .portfolio-link:hover{
-      background:#74172f;
-
-      color:#fff;
-
-      border-color:#d8ae5d;
+    .support-small-icon{
+      font-size:9px;
+      opacity:.9;
     }
 
+    a:focus-visible{
+      outline:2px solid #dfb967;
+      outline-offset:3px;
+    }
 
     /* =========================================
        TABLET
@@ -980,7 +1016,7 @@
     @media(max-width:600px){
 
       body{
-        padding-bottom:36px;
+        padding-bottom:50px;
       }
 
       .top-nav{
@@ -1198,13 +1234,13 @@
         font-size:7.5px;
       }
 
-      .developer-label{
+      .support-link{
         font-size:7.5px;
 
         letter-spacing:.3px;
       }
 
-      .developer-email{
+      .support-link{
         max-width:165px;
 
         overflow:hidden;
@@ -1212,7 +1248,7 @@
         text-overflow:ellipsis;
       }
 
-      .portfolio-link{
+      .support-link{
         min-height:20px;
 
         padding:
@@ -1227,7 +1263,84 @@
        SMALL PHONES
     ========================================= */
 
-    @media(max-width:360px){
+    
+      .developer-bottom{
+        padding:6px 6px;
+      }
+
+      .support-inner{
+        min-height:26px;
+        gap:4px;
+      }
+
+      .support-brand{
+        font-size:7px;
+        letter-spacing:.4px;
+      }
+
+      .support-brand-icon{
+        width:17px;
+        height:17px;
+        font-size:8px;
+      }
+
+      .support-divider{
+        height:15px;
+      }
+
+      .support-caption{
+        font-size:7px;
+      }
+
+      .support-email{
+        max-width:190px;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        font-size:7px;
+      }
+
+      .support-actions{
+        gap:3px;
+      }
+
+      .support-link{
+        min-height:20px;
+        padding:2px 7px;
+        font-size:7px;
+      }
+
+
+      .developer-bottom{
+        padding:6px 5px 7px;
+      }
+
+      .support-inner{
+        gap:5px;
+      }
+
+      .support-brand{
+        font-size:7px;
+        letter-spacing:.6px;
+      }
+
+      .support-brand-icon{
+        width:17px;
+        height:17px;
+        font-size:8px;
+      }
+
+      .support-actions{
+        gap:3px;
+        width:100%;
+      }
+
+      .support-link{
+        min-height:21px;
+        padding:3px 7px;
+        font-size:7px;
+      }
+
+@media(max-width:360px){
 
       .brand-name{
         font-size:13px;
@@ -1293,27 +1406,33 @@
       .description{
         font-size:10.5px;
       }
-
       .developer-bottom{
-        gap:5px;
-
-        font-size:6.8px;
+        padding:4px 3px;
       }
 
-      .developer-label{
-        font-size:6.8px;
+      .support-inner{
+        gap:3px;
       }
 
-      .developer-email{
-        max-width:140px;
+      .support-title{
+        font-size:6.3px;
       }
 
-      .portfolio-link{
-        font-size:6.8px;
-
-        padding:
-          2px 6px;
+      .support-icon{
+        width:15px;
+        height:15px;
+        font-size:7px;
       }
+
+      .support-text{
+        display:none;
+      }
+
+      .support-link{
+        font-size:6.3px;
+        padding:2px 6px;
+      }
+
     }
 
 
@@ -1321,7 +1440,63 @@
        REDUCED MOTION
     ========================================= */
 
-    @media(prefers-reduced-motion:reduce){
+    
+      .support-inner{
+        gap:3px;
+      }
+
+      .support-caption,
+      .support-divider{
+        display:none;
+      }
+
+      .support-brand{
+        font-size:6.2px;
+      }
+
+      .support-brand-icon{
+        width:15px;
+        height:15px;
+        font-size:7px;
+      }
+
+      .support-email{
+        max-width:125px;
+        font-size:6.2px;
+      }
+
+      .support-link{
+        min-height:19px;
+        padding:2px 5px;
+        font-size:6.2px;
+      }
+
+
+      .developer-bottom{
+        padding:5px 3px 6px;
+      }
+
+      .support-brand{
+        font-size:6.3px;
+      }
+
+      .support-brand-icon{
+        width:15px;
+        height:15px;
+        font-size:7px;
+      }
+
+      .support-actions{
+        gap:2px;
+      }
+
+      .support-link{
+        min-height:19px;
+        padding:2px 5px;
+        font-size:6.2px;
+      }
+
+@media(prefers-reduced-motion:reduce){
 
       *,
       *::before,
@@ -1356,7 +1531,7 @@
 
       <img
         src="logo.jpeg"
-        alt="Paramesh Saree Prepleating Logo"
+        alt="Paramesh Saree Prepleating logo"
         class="brand-logo"
       >
 
@@ -1401,7 +1576,7 @@
 
         <img
           src="logo.jpeg"
-          alt="Paramesh Saree"
+          alt="Paramesh Saree Prepleating logo"
           class="hero-logo"
         >
 
@@ -1451,8 +1626,8 @@
       <p class="description">
 
         Premium saree prepleating with neat finishing
-        and perfect pleats, available all over Tamil Nadu.
-        Get your saree ready to wear beautifully and confidently.
+        and perfect pleats. Get your saree ready to
+        wear beautifully and confidently.
 
       </p>
 
@@ -1470,7 +1645,7 @@
 
 
       <div class="mini-note">
-        Perfect Pleats • Premium Finish • Easy Booking • All Over Tamil Nadu
+        Perfect Pleats • Premium Finish • Easy Booking
       </div>
 
 
@@ -1481,36 +1656,58 @@
 
 
   <!-- ========================================
-       BOTTOM BAR
-       ONLY DEVELOPER SUPPORT
-  ========================================= -->
+       DEVELOPER SUPPORT / WEBSITE ISSUES
+       ========================================= -->
+  <!-- ========================================
+       PROFESSIONAL DEVELOPER SUPPORT
+       ========================================= -->
+  <!-- ========================================
+       DEVELOPER SUPPORT
+       ========================================= -->
+  <div class="developer-bottom" aria-label="Developer Support">
 
-  <div class="developer-bottom">
+    <div class="support-inner">
 
-    <span class="developer-label">
-      Developer Support
-    </span>
+      <!-- First line: Developer Support only -->
+      <div class="support-brand">
+        <span class="support-brand-icon" aria-hidden="true">✓</span>
+        Developer Support
+      </div>
 
+      <!-- Second line: two email buttons + portfolio -->
+      <div class="support-actions">
 
-    <a
-      href="mailto:muthukrishnan11028@gmail.com"
-      class="developer-email"
-    >
-      muthukrishnan11028@gmail.com
-    </a>
+        <a
+          class="support-link email-button"
+          href="mailto:muthukrishnan11028@gmail.com?subject=Website%20Issue%20-%20Paramesh%20Saree%20Prepleating&body=Hello%20Developer%2C%0A%0AI%20am%20having%20an%20issue%20with%20the%20website.%0A%0AIssue%3A%0A%0APage%3A%0ADevice%3A%0ABrowser%3A%0A%0AThank%20you."
+          aria-label="Email developer about a website issue"
+        >
+          <span class="support-small-icon" aria-hidden="true">✉</span>
+          Website Issue
+        </a>
 
+        <a
+          class="support-link"
+          href="mailto:muthukrishnan11028@gmail.com?subject=Developer%20Support%20-%20Paramesh%20Saree%20Prepleating"
+          aria-label="Contact developer support"
+        >
+          <span class="support-small-icon" aria-hidden="true">✉</span>
+          Contact Developer
+        </a>
 
-    <a
-      href="https://muthukrishnanj-portfolio.vercel.app/"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="portfolio-link"
-    >
-      Portfolio ↗
-    </a>
+        <a
+          class="support-link portfolio-link"
+          href="https://muthukrishnanj-portfolio.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open developer portfolio"
+        >
+          <span class="support-small-icon" aria-hidden="true">↗</span>
+          Portfolio
+        </a>
 
-  </div>
+      </div>
 
-
-</body>
+    </div>
+  </div></body>
 </html>
